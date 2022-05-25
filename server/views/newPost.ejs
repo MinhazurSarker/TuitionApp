@@ -1,0 +1,127 @@
+<%- include("partials/header",{path:'/posts/new'}) %>
+<main class="content">
+    <div class="container-fluid p-0">
+        <div class="mb-3">
+            <h1 class="h3 d-inline align-middle">Add new</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">New post</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="/posts" method="post" >
+                            <div class="row">
+                                <div class="mb-3 col-md-6 col-lg-6 col-xl-6">
+                                    <label class="form-label" >Subjects</label>
+                                    <input type="text" class="form-control" name="subjects">
+                                </div>
+                                <div class="mb-3 col-md-3 col-lg-3 col-xl-3">
+                                    <label class="form-label" >Class days</label>
+                                    <input type="number" class="form-control" name="days">
+                                </div>
+                                <div class="mb-3 col-md-3 col-lg-3 col-xl-3">
+                                    <label class="form-label" >Study class</label>
+                                    <input type="text" class="form-control" name="class">
+                                </div>
+                                <div class="mb-3 col-md-3 col-lg-3 col-xl-3">
+                                    <label class="form-label" >Salary</label>
+                                    <input type="text" class="form-control" name="salary">
+                                </div>
+                                <div class="col-md-3 col-lg-3 col-xl-3">
+                                    <label class="form-label" >Language</label>
+                                    <select name="lang" class="form-control mb-3">
+                                        <option value="Bangla" selected>Bangla</option>
+                                        <option value="English" >English</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-md-3 col-lg-3 col-xl-3">
+                                    <label class="form-label" >latitude</label>
+                                    <input type="text" class="form-control" name="lan">
+                                </div>
+                                <div class="mb-3 col-md-3 col-lg-3 col-xl-3">
+                                    <label class="form-label" >longitude</label>
+                                    <input type="text" class="form-control" name="lon">
+                                </div>
+                                <div class="mb-3 dropdown-divider"></div>
+                                <div class="mb-3 col-md-3 col-lg-3 col-xl-3">
+                                    <label class="form-label" >Divission</label>
+                                    <select name="divission" id="divissions"" class="form-control mb-3">
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-md-3 col-lg-3 col-xl-3">
+                                    <label class="form-label" >Districts</label>
+                                    <select name="district"id="districts" class="form-control mb-3"></select>
+                                </div>
+                                <div class="mb-3 col-md-3 col-lg-3 col-xl-3">
+                                    <label class="form-label" >Upozilla</label>
+                                    <select name="upozilla"id="upozilla" class="form-control mb-3"></select>
+                                </div>
+                                <div class="mb-3 col-md-3 col-lg-3 col-xl-3">
+                                    <label class="form-label" >Union</label>
+                                    <select name="union"id="union" class="form-control mb-3"></select>
+                                </div>
+                                <div class="mb-3 dropdown-divider"></div>
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label" >Description</label>
+                                    <textarea class="form-control" name="desc" placeholder="description"></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Next</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="/js/axios.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded",async function() {
+        flatpickr(".flatpickr-minimum");
+//----------------------
+        let apiDivissionsData = await axios.get('/api/divissions');
+        let apiDivissions= apiDivissionsData.data.divissions;
+        let domDivissions = "";
+        domDivissions += `<option value="">Select a divission</option>`;
+        apiDivissions.forEach((el)=>{
+            domDivissions += `<option value="${el.name}" >${el.name}</option>`
+        })
+        document.getElementById("divissions").innerHTML = domDivissions;
+        //------------
+
+        document.getElementById("divissions").onchange = async ()=>{
+            let apiDistrictsData = await axios.get('/api/districts');
+            let apiDistricts= apiDistrictsData.data.districts;
+            let filter = document.getElementById("divissions").value;
+            let newDistricts = apiDistricts.filter((el)=>{return el.divission == filter});
+            let domDistricts = "";
+            domDistricts += `<option>Select a district</option>`;
+            newDistricts.forEach((el)=>{ domDistricts += `<option value="${el.name}" >${el.name}</option>`})
+            document.getElementById("districts").innerHTML = domDistricts; 
+        }
+        document.getElementById("districts").onchange = async()=>{
+            let apiUpozillasData = await axios.get('/api/upozillas');
+            let apiUpozillas= apiUpozillasData.data.upazillas;
+            let filter = document.getElementById("districts").value;
+            let newUpozillas = apiUpozillas.filter((el)=>{return el.district == filter});
+            let domUpozillas = "";
+            domUpozillas += `<option value="">Select an upozilla</option>`;
+            newUpozillas.forEach((el)=>{ domUpozillas += `<option value="${el.name}" >${el.name}</option>`})
+            document.getElementById("upozilla").innerHTML = domUpozillas; 
+        }
+        document.getElementById("upozilla").onchange = async()=>{
+            let apiUnionsData = await axios.get('/api/unions');
+            let apiUnions= apiUnionsData.data.unions;
+            let filter = document.getElementById("upozilla").value;
+            let newUnions = apiUnions.filter((el)=>{return el.upazilla == filter});
+            let domUnions = "";
+            domUnions += `<option value="">Select an union</option>`;
+            newUnions.forEach((el)=>{ domUnions += `<option value="${el.name}" >${el.name}</option>`})
+            document.getElementById("union").innerHTML = domUnions; 
+        }
+    });
+</script>
+
+<%- include("partials/footer") %>

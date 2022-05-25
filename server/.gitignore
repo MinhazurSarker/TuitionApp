@@ -1,0 +1,13 @@
+
+# dependencies
+/node_modules
+# testing
+
+# next.js
+
+.env
+
+# debug
+npm-debug.log*
+
+

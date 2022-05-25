@@ -1,0 +1,42 @@
+<%- include("partials/header",{path:'/books'}) %>
+<main class="content">
+	<div class="container-fluid p-0">
+		<div class="mb-3">
+			<h1 class="h3 d-inline align-middle">Users</h1>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body">
+						<table id="datatables-reponsive" class="table table-striped" style="width:100%">
+							<thead>
+								<tr>
+									<th>Title</th>
+									<th>Author</th>
+									<th>Author Role</th>
+									<th>Published</th>
+									<th>View</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% books.forEach((book)=>{%>
+									<tr>
+										<td><%= book.title %></a></td>
+										<td><%= book.author %></td>
+										<td><%= book.role %></td>
+										<td><%= book.published %></td>
+										<td>
+											<a class="btn btn-primary" href="/book/<%= book._id %>"><i class="align-middle" data-feather="eye"></i></a>
+										</td>
+									</tr>
+								<% }) %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</main>
+<%- include("partials/footer") %>

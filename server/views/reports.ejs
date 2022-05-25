@@ -1,0 +1,42 @@
+<%- include("partials/header",{path:'/reports'}) %>
+<main class="content">
+	<div class="container-fluid p-0">
+
+		<div class="mb-3">
+			<h1 class="h3 d-inline align-middle">Reports</h1>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body">
+						<table id="datatables-reponsive" class="table table-striped" style="width:100%">
+							<thead>
+								<tr>
+									<th>by</th>
+									<th>type</th>
+									<th>to</th>
+									<th>View</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% reports.forEach((report)=>{%>
+									<tr>
+										<td><a href="/user/<%= report.by %>"><%= report.by %></a></td>
+										<td><%= report.type %></td>
+										<td><a href="<% if (report.type=='user') { %>/user/<% } else { %>/post/<% } %><%= report.reported %>"><%= report.reported %></i></a></td>
+										<td>
+											<a class="btn btn-primary" href="/report/<%= report._id %>"><i class="align-middle" data-feather="eye"></i></a>
+										</td>
+									</tr>
+								<% }) %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</main>
+<%- include("partials/footer") %>

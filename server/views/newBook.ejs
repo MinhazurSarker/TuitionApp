@@ -1,0 +1,63 @@
+<%- include("partials/header",{path:'/books/new'}) %>
+
+<main class="content">
+    <div class="container-fluid p-0">
+        <div class="mb-3">
+            <h1 class="h3 d-inline align-middle">Add new</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">New book</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="/books" method="post" enctype="multipart/form-data" >
+                            <div class="row">
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label" >Title</label>
+                                    <input type="text" class="form-control" name="title" value=" " >
+                                </div>
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label" >description</label>
+                                    <textarea id="editor" class="form-control" name="desc"></textarea>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label" >Featured Image</label>
+                                    <input type="file" class="form-control mb-3" name="img" >
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label" >PDF</label>
+                                    <input type="file" class="form-control" name="pdf" >
+                                </div>
+                            
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label" >Published?</label>
+                                <select name="published" class="form-control mb-3">
+                                    <option selected value="No" >No</option>
+                                    <option value="Yes" >Yes</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Next</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ </main>
+<script type="text/javascript"src='/js/jodit.min.js'></script> 
+<script>
+var editor = new Jodit("#editor", {
+    "autofocus": true,
+    "uploader": {
+      "insertImageAsBase64URI": true
+    },
+    "spellcheck": true,
+    "toolbarButtonSize": "small",
+  
+  });
+  editor.value = 'Start writing your book. Delete this text.';
+</script>
+<%- include("partials/footer") %>

@@ -1,0 +1,50 @@
+<%- include("partials/header",{path:'/tutors'}) %>
+<main class="content">
+	<div class="container-fluid p-0">
+
+		<div class="mb-3">
+			<h1 class="h3 d-inline align-middle">Tutors</h1>
+		</div>
+
+	
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body">
+						<table id="datatables-reponsive" class="table table-striped" style="width:100%">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Phone</th>
+									<th>Email</th>
+									
+									<th>Sub Due date</th>
+									<th>Refers</th>
+									<th>View & edit</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% users.forEach((user)=>{%>
+									<tr>
+										<td><%= user.name %></a></td>
+										<td><a href="tel:+<%= user.phone %>">+<%= user.phone %></a></td>
+										<td><a href="mailto:<%= user.email %>"><%= user.email %></i></a></td>
+										<td><%= user.subEnd %></td>
+										<td><%= user.refs %></td>
+										<td>
+											<a class="btn btn-primary" href="/user/<%= user._id %>"><i class="align-middle" data-feather="eye"></i></a>
+										</td>
+									</tr>
+								<% }) %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</main>
+
+<%- include("partials/footer") %>

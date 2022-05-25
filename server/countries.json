@@ -1,0 +1,22 @@
+{ 
+    "districks":[
+        {
+
+            "name":"dhaka",
+            "upojilas":[
+                "Ajimpur",
+                "mirpur",
+                "Savar"
+            ]
+        },
+        {
+            "name":"Rangpur",
+            "upojilas":[
+                "Pirganj",
+                "Mithapukur"
+            
+            ]
+        }
+       
+    ]
+}

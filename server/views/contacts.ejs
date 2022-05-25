@@ -1,0 +1,46 @@
+<%- include("partials/header",{path:'/contacts'}) %>
+<main class="content">
+	<div class="container-fluid p-0">
+
+		<div class="mb-3">
+			<h1 class="h3 d-inline align-middle">Contacts</h1>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body">
+						<table id="datatables-reponsive" class="table table-striped" style="width:100%">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Company</th>
+									<th>Email</th>
+									<th>Phone</th>
+									<th>Subject</th>
+									<th>view</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% contacts.forEach((contact)=>{%>
+									<tr>
+										<td><%= contact.name %></a></td>
+										<td><%= contact.company %></a></td>
+										<td><%= contact.email %></a></td>
+										<td><%= contact.phone %></a></td>
+										<td><%= contact.subject %></a></td>
+										<td>
+											<a class="btn btn-primary" href="/contact/<%= contact._id %>"><i class="align-middle" data-feather="eye"></i></a>
+										</td>
+									</tr>
+								<% }) %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</main>
+<%- include("partials/footer") %>

@@ -1,0 +1,45 @@
+<%- include("partials/header",{path:'/trxs'}) %>
+
+<main class="content">
+	<div class="container-fluid p-0">
+
+		<div class="mb-3">
+			<h1 class="h3 d-inline align-middle">Transictions</h1>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body">
+						<table id="datatables-reponsive" class="table table-striped" style="width:100%">
+							<thead>
+								<tr>
+									<th>Phone</th>
+									<th>Amount</th>
+									<th>Plan</th>
+									<th>Status</th>
+									<th>TrxID</th>
+									<th>time</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% trxs.forEach((trx)=>{%>
+									<tr>
+										<td class="table-action"><a href="tel:+<%= trx.phone %>">+<%= trx.phone %></a></td>
+										<td><%= trx.amount %></td>
+										<td><%= trx.plan %></td>
+										<td><%= trx.status %></td>
+										<td><%= trx._id %></td>
+										<td><%= trx.createdAt %></td>
+									</tr>
+								<% }) %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+
+
+<%- include("partials/footer") %>

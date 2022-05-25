@@ -1,0 +1,42 @@
+<%- include("partials/header",{path:'/report'}) %>
+    <main class="content">
+        <div class="container-fluid p-0">
+            <div class="mb-3">
+                <h1 class="h3 d-inline align-middle">Report</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title"></h5>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="mb-3 col-md-12">
+                                    <h5 class="card-title">Reason</h5>
+                                    <h6 class="card-subtitle"><%= report.reason %></h6>
+                                </div>
+                                <div class="mb-3 col-md-12">
+                                    <h5 class="card-title">Desc</h5>
+                                    <h6 class="card-subtitle"><%= report.desc %></h6>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                   <a href="/user/<%= report.by %>" class="btn btn-primary">Reported by</a>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                   <a href="<% if (report.type=='user') { %>/user/<% } else { %>/post/<% } %><%= report.reported %>" class="btn btn-primary">Reported subject</a>
+                                </div>
+                            </div>
+
+                            <form id="nestedForm" action="/report/<%= report._id %>/delete" method="post"></form>
+                            <div class="btn-group btn-group-lg mb-3" role="group" aria-label="Large button group">
+                                <button type="submit" form="nestedForm" class="btn btn-danger">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include("partials/footer") %>

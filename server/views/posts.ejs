@@ -1,0 +1,44 @@
+<%- include("partials/header",{path:'/posts'}) %>
+<main class="content">
+	<div class="container-fluid p-0">
+
+		<div class="mb-3">
+			<h1 class="h3 d-inline align-middle">Users</h1>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body">
+						<table id="datatables-reponsive" class="table table-striped" style="width:100%">
+							<thead>
+								<tr>
+									<th>Class</th>
+									<th>Days</th>
+									<th>Subjects</th>
+									<th>Language</th>
+									<th>Edit</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% posts.forEach((post)=>{%>
+									<tr>
+										<td><%= post.Class %></a></td>
+										<td><%= post.days %></a></td>
+										<td><%= post.subjects %></a></td>
+										<td><%= post.lang %></a></td>
+										<td>
+											<a class="btn btn-primary" href="/post/<%= post._id %>"><i class="align-middle" data-feather="eye"></i></a>
+										</td>
+									</tr>
+								<% }) %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</main>
+<%- include("partials/footer") %>

@@ -1,0 +1,345 @@
+<%- include("partials/header",{path:'/settings'}) %>
+    <main class="content">
+        <div class="container-fluid p-0">
+            <h1 class="h3 mb-3">Settings</h1>
+            <div class="row">
+                <div class="col-md-3 col-xl-2">
+                    <div class="card">
+                        <div class="list-group list-group-flush" role="tablist">
+                            <a class="list-group-item list-group-item-action active" data-bs-toggle="list"
+                                href="#sliders" role="tab">
+                                Sliders
+                            </a>
+                            <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#sms"
+                                role="tab">
+                                SMS API
+                            </a>
+                            <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#payment"
+                                role="tab">
+                                Payment Gateway
+                            </a>
+                            <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#footerLinks"
+                                role="tab">
+                                Footer links
+                            </a>
+                            <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#terms"
+                                role="tab">
+                                Terms
+                            </a>
+                            <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#policies"
+                                role="tab">
+                                Policies
+                            </a>
+                            <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#disclaimers"
+                                role="tab">
+                                Disclaimers
+                            </a>
+                            <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#about"
+                                role="tab">
+                                About
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9 col-xl-10">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="sliders" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Home page sliders</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="accordion" id="slider">
+                                        <% sliders.forEach((slider)=>{%>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="heading<%=slider._id%>">
+                                                    <button
+                                                        class="accordion-button <% if(slider.title.length!==0){ %>collapsed<% } %>"
+                                                        type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#collapse<%=slider._id%>" aria-expanded="true"
+                                                        aria-controls="collapse<%=slider._id%>">
+                                                        <%=slider.title || "New Slide" %>
+                                                    </button>
+                                                </h2>
+                                                <div id="collapse<%=slider._id%>"
+                                                    class="accordion-collapse collapse <% if(slider.title.length==0){ %>show<% } %>"
+                                                    aria-labelledby="heading<%=slider._id%>" data-bs-parent="#slider">
+                                                    <div class="accordion-body">
+                                                        <form id="form<%=slider._id%>"
+                                                            action="/update-slider/<%=slider._id%>"
+                                                            enctype="multipart/form-data" method="post">
+                                                            <div class="row">
+
+                                                                <div class="col-lg-8 col-md-8 col-xl-8 mb-3">
+                                                                    <% if (slider.img.length!==0){%>
+                                                                        <img class="card-img" src="<%= slider.img %>">
+                                                                        <% } %>
+                                                                </div>
+                                                                <div class="col-lg-8 col-md-8 col-xl-8 mb-3">
+                                                                    <label class="form-label">Slider title</label>
+                                                                    <input class="form-control form-control-lg" required
+                                                                        type="text" name="title"
+                                                                        value="<%=slider.title%>" />
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-4 col-xl-4 mb-3">
+                                                                    <label class="form-label">Image</label>
+                                                                    <input class="form-control form-control-lg"
+                                                                        type="file" name="img" />
+                                                                </div>
+                                                                <div class=" mb-3">
+                                                                    <label class="form-label">Heading</label>
+                                                                    <input class="form-control form-control-lg" required
+                                                                        type="text" name="heading"
+                                                                        value="<%=slider.heading%>" />
+                                                                </div>
+                                                                <div class=" mb-3">
+                                                                    <label class="form-label">Text</label>
+                                                                    <input class="form-control form-control-lg" required
+                                                                        type="text" name="text"
+                                                                        value="<%=slider.text%>" />
+                                                                </div>
+                                                                <div class="col-6 mb-3">
+                                                                    <label class="form-label">Button text</label>
+                                                                    <input class="form-control form-control-lg" required
+                                                                        type="text" name="btn"
+                                                                        value="<%=slider.btn%>" />
+                                                                </div>
+                                                                <div class="col-6 mb-3">
+                                                                    <label class="form-label">Button Url</label>
+                                                                    <input class="form-control form-control-lg" required
+                                                                        type="text" name="url"
+                                                                        value="<%=slider.url%>" />
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                        <form id="nestedForm<%=slider._id%>"
+                                                            action="/delete-slider/<%=slider._id%>" method="post">
+                                                        </form>
+                                                        <div class="btn-group btn-group-lg mb-3" role="group"
+                                                            aria-label="Large button group">
+                                                            <button type="submit" form="form<%=slider._id%>"
+                                                                class="btn btn-success">Save </button>
+                                                            <button type="submit" form="nestedForm<%=slider._id%>"
+                                                                class="btn btn-danger">Delete</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                    </div>
+                                    <form action="/slider" method="post">
+                                        <div class="text-center mt-3">
+                                            <button type="submit" class="btn btn-lg btn-primary">Add new slide</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="sms" role="tabpane2">
+
+                            <div class="card">
+                                <div class="card-header">
+
+                                    <h5 class="card-title mb-0">SMS API Token</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form action="/settings/sms" method="post">
+                                        <a href="https://alpha.net.bd/sms/" target="_blank"
+                                            rel="noopener noreferrer">Alpha sms</a> |
+                                        <a href="https://sms.greenweb.com.bd/" target="_blank"
+                                            rel="noopener noreferrer">Green web sms</a>
+                                        <div class="mb-3">
+                                            <label class="form-label">Token</label>
+                                            <input type="text" class="form-control" name="smsToken"
+                                                value="<%= sms.smsToken %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Gateway</label>
+                                            <select name="smsGateway" class="form-select mb-3">
+                                                <option value="greenWeb" <% if(sms.smsGateway=="greenWeb" ){ %>selected
+                                                    <% } %> >Green Web
+                                                </option>
+                                                <option value="alphaSMS" <% if(sms.smsGateway=="alphaSMS" ){ %>selected
+                                                    <% } %>>Alpha SMS
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="payment" role="tabpane3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">AmarPay PAyment gateway</h5>
+
+                                    <form action="/settings/gateway" method="post">
+                                        <div class="mb-3">
+                                            <label class="form-label">Signature key</label>
+                                            <input type="text" name="signKey" class="form-control"
+                                                value="<%= payKeys.signKey %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Store Id</label>
+                                            <input type="text" name="storeId" class="form-control"
+                                                value="<%= payKeys.storeId %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Return url</label>
+                                            <input type="text" name="returnUrl" class="form-control"
+                                                value="<%= payKeys.returnUrl %>">
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-xl-3">
+                                            <label class="form-label">Payment mode</label>
+                                            <select name="mode" class="form-control mb-3">
+                                                <option value="test" <%if(payKeys.mode=='test' ){%>selected<%}%>>test
+                                                </option>
+                                                <option value="secure" <%if(payKeys.mode=='secure' ){%>selected<%}%>
+                                                        >Secure</option>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="footerLinks" role="tabpane4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Footer social links and text</h5>
+
+                                    <form action="/settings/footer" method="post">
+
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Facebook Link</label>
+                                            <input type="text" name="fb" class="form-control" value="<%= links.fb %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Linkedin Link</label>
+                                            <input type="text" name="in" class="form-control" value="<%= links.in %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Twitter Link</label>
+                                            <input type="text" name="tw" class="form-control" value="<%= links.tw %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Youtube Link</label>
+                                            <input type="text" name="yt" class="form-control" value="<%= links.yt %>">
+                                        </div>
+                                        <div class="mb-3 dropdown-divider"></div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Phone number</label>
+                                            <input type="text" name="phone" class="form-control"
+                                                value="<%= links.phone %>">
+                                        </div>
+                                        <div class="mb-3 dropdown-divider"></div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Android app download Link</label>
+                                            <input type="text" name="ps" class="form-control" value="<%= links.ps %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">iOS app download Link</label>
+                                            <input type="text" name="as" class="form-control" value="<%= links.as %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Footer text</label>
+                                            <input type="text" name="txt" class="form-control" value="<%= links.txt %>">
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="terms" role="tabpane5">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Terms and conditions</h5>
+                                    <form action="/settings/terms" method="post">
+                                        <div class="mb-3">
+                                            <label class="form-label">Terms</label>
+                                            <textarea id="editor1" class="form-control"
+                                                name="terms"><%= terms %></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="policies" role="tabpane6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Privacy policy</h5>
+
+                                    <form action="/settings/policies" method="post">
+                                        <div class="mb-3">
+                                            <label class="form-label">Policies</label>
+                                            <textarea id="editor2" class="form-control"
+                                                name="policies"><%= policies %></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="disclaimers" role="tabpane7">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Disclaimers</h5>
+
+                                    <form action="/settings/disclaimers" method="post">
+                                        <div class="mb-3">
+                                            <label class="form-label">Disclaimers</label>
+                                            <textarea id="editor3" class="form-control"
+                                                name="disclaimers"><%= disclaimers %></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="about" role="tabpane8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">About us</h5>
+
+                                    <form action="/settings/about" method="post">
+                                        <div class="mb-3">
+                                            <label class="form-label">About</label>
+                                            <textarea id="editor4" class="form-control"
+                                                name="about"><%= about %></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script type="text/javascript" src='/js/jodit.min.js'></script>
+    <script>
+        var config = {
+            "autofocus": true,
+            "uploader": {
+                "insertImageAsBase64URI": true
+            },
+            "spellcheck": true,
+            "toolbarButtonSize": "small",
+        }
+        var editor = new Jodit("#editor1", config);
+        var editor2 = new Jodit("#editor2", config);
+        var editor3 = new Jodit("#editor3", config);
+        var editor4 = new Jodit("#editor4", config);
+    </script>
+    <%- include("partials/footer") %>

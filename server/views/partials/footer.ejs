@@ -1,0 +1,40 @@
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row text-muted">
+            <div class="col-3 text-start">
+                <p class="mb-0">
+                    <a href="/" target="_blank" class="text-muted"><strong>Tution App</strong></a>
+                </p>
+            </div>
+            <div class="col-7 text-start">
+                <p class="mb-0 d-none  d-md-block d-lg-block d-xl-block">
+                    Developed and &copy; by <a href="https://cellsweb.com" target="_blank" class="text-muted"><strong>Cellsweb IT Soutions Ltd</strong></a>
+                </p>
+            </div>
+            <div class="col-2 text-end">
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <a class="text-muted" href="https://cellsweb.com/contact" target="_blank">Support</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+<script src="/js/app.js"></script>
+<script src="/js/datatables.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+        const resDb = document.getElementById('datatables-reponsive')
+        if(resDb != null){
+            $("#datatables-reponsive").DataTable({
+                responsive: true
+            });
+        }
+});
+</script>
+</body>
+</html>
+    

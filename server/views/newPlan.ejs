@@ -1,0 +1,41 @@
+<%- include("partials/header",{path:'/plans/new'}) %>
+<main class="content">
+    <div class="container-fluid p-0">
+        <div class="mb-3">
+            <h1 class="h3 d-inline align-middle">Add new</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">New plan</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="/plans" method="post">
+                            <div class="row">
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label" >Title</label>
+                                    <input type="text" class="form-control" name="title" >
+                                </div>
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label" >Days</label>
+                                    <input type="number" class="form-control" name="days" >
+                                </div>
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label" >Price amount</label>
+                                    <input type="number" class="form-control" name="amount" >
+                                </div>
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label" >description</label>
+                                    <textarea class="form-control" name="desc" placeholder="description"></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<%- include("partials/footer") %>

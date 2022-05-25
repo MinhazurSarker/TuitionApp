@@ -1,0 +1,64 @@
+<%- include("partials/header",{path:'/contact'}) %>
+    <main class="content">
+        <div class="container-fluid p-0">
+            <div class="mb-3">
+                <h1 class="h3 d-inline align-middle">Contact</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div id="main">
+                                <div class="row">
+                                    <div class="mb-3 col-12">
+                                        <h3>Name</h3>
+                                        <p>
+                                            <%= contact.name %>
+                                        </p>
+                                    </div>
+                                    <div class="mb-3 col-12">
+                                        <h3>Company</h3>
+                                        <p>
+                                            <%= contact.company %>
+                                        </p>
+                                    </div>
+                                    <div class="mb-3 col-12">
+                                        <h3>Email</h3>
+                                        <p>
+                                            <%= contact.email %>
+                                        </p>
+                                    </div>
+                                    <div class="mb-3 col-12">
+                                        <h3>Phone</h3>
+                                        <p>
+                                            <%= contact.phone %>
+                                        </p>
+                                    </div>
+                                    <div class="mb-3 col-12">
+                                        <h3>Description</h3>
+                                        <p>
+                                            <%= contact.desc %>
+                                        </p>
+                                    </div>
+                                    <div class="mb-3 col-12">
+                                        <h3>Location</h3>
+                                        <a target="_blank" href="http://www.google.com/maps/place/<%= contact.lan %>,<%= contact.lon %>">Map</a>
+                                      
+                                    </div>
+                                </div>
+
+                                </form>
+                                <form id="nestedForm" action="/contact/<%= contact._id %>/delete" method="post">
+                                </form>
+                                <div class="btn-group btn-group-lg mb-3" role="group" aria-label="Large button group">
+                                    <button type="submit" form="nestedForm" class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+
+    <%- include("partials/footer") %>

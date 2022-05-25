@@ -1,0 +1,56 @@
+<%- include("partials/header",{path:'/settings/district'}) %>
+<main class="content">
+    <div class="container-fluid p-0">
+        <div class="mb-3">
+            <h1 class="h3 d-inline align-middle">Add new</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Add new union</h5>
+                    </div>
+                    <div class="card-body">
+                        
+                        <form id="main" action="/settings/district" method="post" >
+                            <div class="row">
+                                <div class="mb-3 col-md-6 col-lg-6 col-xl-6">
+                                    <label class="form-label" >Divission</label>
+                                    <select name="divission"required id="divissions"" class="form-control mb-3">
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-md-6 col-lg-6 col-xl-6">
+                                    <label class="form-label" >Name</label>
+                                    <input type="text" required class="form-control"  name="name">
+                                </div>
+                                
+                            </div>
+                        </form>
+                        <div class="btn-group btn-group-lg mb-3" role="group" aria-label="Large button group">
+                            <button type="submit"form="main" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="/js/axios.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded",async function() {
+        flatpickr(".flatpickr-minimum");
+//----------------------
+        let apiDivissionsData = await axios.get('/api/divissions');
+        let apiDivissions= apiDivissionsData.data.divissions;
+        let domDivissions = "";
+        domDivissions += `<option value="">Select a divission</option>`;
+        apiDivissions.forEach((el)=>{
+            domDivissions += `<option value="${el.name}" >${el.name}</option>`
+        })
+        document.getElementById("divissions").innerHTML = domDivissions;
+        
+
+    });
+</script>
+
+<%- include("partials/footer") %>

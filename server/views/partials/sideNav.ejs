@@ -1,0 +1,77 @@
+<ul class="sidebar-nav">
+    <li class="sidebar-item <% if ( path =='/'){%>active <% } %>">
+        <a class="sidebar-link"href="/">
+            <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Dashboards</span>
+        </a>
+    </li>
+    <li class="sidebar-item <% if ( path =='/users/new'||path =='/admins'||path =='/users'||path =='/tutors'){%> active <% } %>">
+        <a data-bs-target="#users" data-bs-toggle="collapse" class="sidebar-link <% if ( path =='/users/new'||path =='/admins'||path =='/users'||path =='/tutors'){%> <% }else{%> collapsed <%} %>">
+            <i class="align-middle" data-feather="users"></i> <span class="align-middle">Users</span>
+        </a>
+        <ul id="users" class="sidebar-dropdown list-unstyled collapse<% if ( path =='/users/new'||path =='/admins'||path =='/users'||path =='/tutors'){%> show <% } %>" data-bs-parent="#sidebar">
+            <li class="sidebar-item <% if ( path =='/users'){%>active <% } %>"><a class="sidebar-link" href="/users">All Users</a></li>
+            <li class="sidebar-item <% if ( path =='/tutors'){%>active <% } %>"><a class="sidebar-link " href="/tutors">Tutors</a></li>
+            <li class="sidebar-item <% if ( path =='/admins'){%>active <% } %>"><a class="sidebar-link " href="/admins">Admins</a></li>
+            <li class="sidebar-item <% if ( path =='/users/new'){%>active <% } %>"><a class="sidebar-link " href="/users/new">Add new user</a></li>
+        </ul>
+    </li>
+    <li class="sidebar-item <% if (path =='/plans'||path =='/plan'||path =='/plans/new'){%> active <% } %>">
+        <a data-bs-target="#plans" data-bs-toggle="collapse" class="sidebar-link <% if ( path =='/plans'||path =='/plan'||path =='/plans/new'){%> <% }else{%> collapsed <%} %>">
+            <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">Pricing Plans</span>
+        </a>
+        <ul id="plans" class="sidebar-dropdown list-unstyled collapse <% if ( path =='/plans'||path =='/plan'||path =='/plans/new'){%> show <% } %>" data-bs-parent="#sidebar">
+            <li class="sidebar-item <% if ( path =='/plans'){%>active <% } %>"><a class="sidebar-link" href="/plans">All plans</a></li>
+            <li class="sidebar-item <% if ( path =='/plans/new'){%>active <% } %>"><a class="sidebar-link" href="/plans/new">Add new plan</a></li>
+        </ul>
+    </li>
+    <li class="sidebar-item <% if (path =='/books'||path =='/book'||path =='/books/new'){%> active <% } %>">
+        <a data-bs-target="#books" data-bs-toggle="collapse" class="sidebar-link <% if (path =='/books'||path =='/book'||path =='/books/new'){%> <% }else{%> collapsed <%} %>">
+            <i class="align-middle" data-feather="book-open"></i> <span class="align-middle">Books</span>
+        </a>
+        <ul id="books" class="sidebar-dropdown list-unstyled collapse <% if (path =='/books'||path =='/book'||path =='/books/new'){%> show <% } %>" data-bs-parent="#sidebar">
+            <li class="sidebar-item <% if ( path =='/books'){%>active <% } %>"><a class="sidebar-link" href="/books">All books</a></li>
+            <li class="sidebar-item <% if ( path =='/books/new'){%>active <% } %>"><a class="sidebar-link" href="/books/new">Add new book</a></li>
+        </ul>
+    </li>
+    <li class="sidebar-item <% if (path =='/posts'||path =='/post'||path =='/posts/new'){%> active <% } %>">
+        <a data-bs-target="#posts" data-bs-toggle="collapse" class="sidebar-link <% if (path =='/posts'||path =='/post'||path =='/posts/new'){%> <% }else{%> collapsed <%} %>">
+            <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Posts</span>
+        </a>
+        <ul id="posts" class="sidebar-dropdown list-unstyled collapse <% if (path =='/posts'||path =='/post'||path =='/posts/new'){%> show <% } %>" data-bs-parent="#sidebar">
+            <li class="sidebar-item <% if ( path =='/posts'){%>active <% } %>"><a class="sidebar-link" href="/posts">All posts</a></li>
+            <li class="sidebar-item <% if ( path =='/posts/new'){%>active <% } %>"><a class="sidebar-link" href="/posts/new">Add new post</a></li>
+        </ul>
+    </li>
+    <li class="sidebar-item <% if ( path =='/contacts' || path=='contact'){%> active <% } %>">
+        <a href="/contacts" class="sidebar-link ">
+            <i class="align-middle" data-feather="mail"></i> <span class="align-middle">Contacts</span>
+        </a>
+    </li>
+    <li class="sidebar-item <% if ( path =='/reports' || path=='report'){%> active <% } %>">
+        <a href="/reports" class="sidebar-link ">
+            <i class="align-middle" data-feather="alert-triangle"></i> <span class="align-middle">Reports</span>
+        </a>
+    </li>
+    <li class="sidebar-item <% if ( path =='/trxs'){%> active <% } %>">
+        <a href="/trxs" class="sidebar-link ">
+            <i class="align-middle" data-feather="credit-card"></i> <span class="align-middle">Transictions</span>
+        </a>
+    </li>
+    <li class="sidebar-header">
+        Settings
+    </li>
+    <li class="sidebar-item <% if (path =='/profile'||path =='/settings'||path =='/settings/divission'||path =='/settings/district'||path =='/settings/upozilla'||path =='/settings/union'){ %> active <% } %>">
+        <a data-bs-target="#settings" data-bs-toggle="collapse" class="sidebar-link <% if (path =='/profile'||path =='/settings'||path =='/settings/divission'||path =='/settings/district'||path =='/settings/upozilla'||path =='/settings/union'){%> <% }else{%> collapsed <%} %>">
+            <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Settings</span>
+        </a>
+        <ul id="settings" class="sidebar-dropdown list-unstyled collapse <% if (path =='/profile'||path =='/settings'||path =='/settings/divission'||path =='/settings/district'||path =='/settings/upozilla'||path =='/settings/union'){%> show <% } %>" data-bs-parent="#sidebar">
+            <li class="sidebar-item <% if ( path =='/profile'){%>active <% } %>"><a class="sidebar-link" href="/profile">My profile</a></li>
+            <li class="sidebar-item <% if ( path =='/settings'){%>active <% } %>"><a class="sidebar-link" href="/settings">Site settings</a></li>
+            <li><div class="mb-3 dropdown-divider"></div></li>
+            <li class="sidebar-item <% if ( path =='/settings/divission'){%>active <% } %>"><a class="sidebar-link" href="/settings/divission">Add divission</a></li>
+            <li class="sidebar-item <% if ( path =='/settings/district'){%>active <% } %>"><a class="sidebar-link" href="/settings/district">Add district</a></li>
+            <li class="sidebar-item <% if ( path =='/settings/upozilla'){%>active <% } %>"><a class="sidebar-link" href="/settings/upozilla">add upozilla</a></li>
+            <li class="sidebar-item <% if ( path =='/settings/union'){%>active <% } %>"><a class="sidebar-link" href="/settings/union">add union</a></li>
+        </ul>
+    </li>
+</ul>
