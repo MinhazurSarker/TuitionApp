@@ -115,19 +115,19 @@ const callBack = async (req, res) => {
         await trx.save();
         await user.save();
         dashboardDB.push('/income', Number(totalIncome) + Number(trx.amount));
-        res.render('payStatus', { status: "Successful", returnUrl: jsonDB.getData("/payKeys/returnUrl") });
+        res.redirect(jsonDB.getData("/payKeys/returnUrl"));
       } catch (error) {
         trx.status = 'Failed';
         trx.save();
-        res.render('payStatus', { status: "Failed", returnUrl: jsonDB.getData("/payKeys/returnUrl") });
+        res.redirect(jsonDB.getData("/payKeys/returnUrl"));
       }
     } else {
       trx.status = 'Failed';
       trx.save();
-      res.render('payStatus', { status: "Failed", returnUrl: jsonDB.getData("/payKeys/returnUrl") });
+      res.redirect(jsonDB.getData("/payKeys/returnUrl"));
     }
   } catch (error) {
-    res.render('payStatus', { status: "Failed", returnUrl: jsonDB.getData("/payKeys/returnUrl"), });
+    res.redirect(jsonDB.getData("/payKeys/returnUrl"));
   }
 
 }
