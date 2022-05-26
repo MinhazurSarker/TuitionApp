@@ -66,12 +66,12 @@ const authVerify = async (req, res, next) => {
             }
             else if (postId) {
                 try {
-                    const tPost = await Post.findOne({ userId: user._id })
+                    const tPost = await Post.findOne({ userID: user._id })
                     const postOwner = await User.findOne({ _id: tPost.userID })
                     if (postOwner.role == 'super') {
                         next();
                     } else if (postOwner.role == 'admin') {
-                        if (postOwner.role == 'admin' && tPost.userId == user._id) {
+                        if (postOwner.role == 'admin' && tPost.userID.toString() == user._id.toString()) {
                             next();
                         }
                         else if (postOwner.role == 'admin' && user.role == 'super') {
@@ -80,7 +80,7 @@ const authVerify = async (req, res, next) => {
                             res.status(404).render('401', { msg: 'You can not view or edit this Post' });
                         }
                     } else if (postOwner.role == 'user' || postOwner.role == 'tutor') {
-                        if (tPost.userId == user._id || user.role == 'admin' || user.role == 'super') {
+                        if (tPost.userID.toString() == user._id.toString() || user.role == 'admin' || user.role == 'super') {
                             next();
                         } else {
                             res.status(404).render('401', { msg: 'You can not view or edit this Post' });
@@ -95,13 +95,13 @@ const authVerify = async (req, res, next) => {
             }
             else if (bookId) {
                 try {
-                    const tBook = await Book.findOne({ userId: user._id.toString() })
+                    const tBook = await Book.findOne({ userID: user._id})
                     try {
-                        const bookOwner = await User.findOne({ _id: Id })
-                        if (bookOwner.role = 'super') {
+                        const bookOwner = await User.findOne({ _id: bookId.userID.toString() })
+                        if (bookOwner.role = 'super' && user.role == 'super') {
                             next();
                         } else if (bookOwner.role == 'admin') {
-                            if (bookOwner.role == 'admin' && Id == user._id.toString()) {
+                            if (bookOwner.role == 'admin' && tBook.userID.toString() == user._id.toString()) {
                                 next();
                             }
                             else if (bookOwner.role == 'admin' && user.role == 'super') {
@@ -109,17 +109,11 @@ const authVerify = async (req, res, next) => {
                             } else {
                                 res.status(404).render('401', { msg: 'You can not view or edit this Book' });
                             }
-                        } else if (bookOwner.role == 'user' || bookOwner.role == 'tutor') {
-                            if (Id == user._id.toString() || user.role == 'admin' || user.role == 'super') {
-                                next();
-                            } else {
-                                res.status(404).render('401', { msg: 'You can not view or edit this Book1' });
-                            }
                         } else {
-                            res.status(404).render('401', { msg: 'You can not view or edit this Book2' });
+                            res.status(404).render('401', { msg: 'You can not view or edit this Book' });
                         }
                     } catch (error) {
-                        res.status(404).render('401', { msg: 'You can not view or edit this Book3' });
+                        res.status(404).render('401', { msg: 'You can not view or edit this Book' });
                     }
                         
                 } catch (error) {
@@ -159,7 +153,7 @@ const superAdminVerify = async (req, res, next) => {
             res.status(406).render('401', { msg: 'You are not Super Admin' });
         }
     } catch (err) {
-        res.status(406).render('401', { msg: 'You are not Super Admin' + err });
+        res.status(406).render('401', { msg: 'You are not Super Admin' });
     }
 }
 const adminVerify = async (req, res, next) => {
