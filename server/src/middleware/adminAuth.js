@@ -27,110 +27,7 @@ const isAuth = async (req, res, next) => {
     }
 }
 //---------------
-const authVerify1 = async (req, res, next) => {
-    const token = req.headers.token || req.cookies.token || req.query.token;
-    const postId = req.params.postId;
-    const bookId = req.params.bookId;
-    const tId = req.params.userId;
-    let Id;
-    try {
-        jwt.verify(token, jwt_secret, (err, decoded) => { Id = decoded.userId; });
-        try {
-            const user = await User.findOne({ _id: Id });
-            if (tId) {
-                const tUser = await User.findOne({ _id: tId });
 
-                if (tUser){
-                    if (tUser.role == 'super' && tUser._id == user._id) {
-                        next();
-                    }
-                    else if (tUser.role == 'admin') {
-                        if (tUser.role == 'admin' && tUser._id == user._id) {
-                            next();
-                        } else if (tUser.role == 'admin' && user.role == 'super') {
-                            next();
-                        } else {
-                            res.status(404).render('401', { msg: 'You can not view or edit this account' });
-                        }
-                    } else if (tUser.role == 'user' || tUser.role == 'tutor') {
-                        if (tId == user._id || user.role == 'admin' || user.role == 'super') {
-                            next();
-                        } else {
-                            res.status(404).render('401', { msg: 'You can not view or edit this account' });
-                        }
-                    } else {
-                        res.status(404).render('401', { msg: 'You can not view or edit this account' });
-                    }
-                } else {
-                    res.status(401).render('401', { msg: 'No user found to edit' });
-                }
-            }
-            else if (postId) {
-                const tPost = await Post.findOne({ userId: user._id })
-                const postOwner = await User.findOne({ _id: tPost.userId })
-                if (tPost) {
-                    if (postOwner.role = 'super' && tPost.userId == user._id) {
-                        next();
-                    } else if (postOwner.role == 'admin') {
-                        if (postOwner.role == 'admin' && tPost.userId == user._id) {
-                            next();
-                        }
-                        else if (postOwner.role == 'admin' && user.role == 'super') {
-                            next();
-                        } else {
-                            res.status(404).render('401', { msg: 'You can not view or edit this Post' });
-                        }
-                    } else if (postOwner.role == 'user' || postOwner.role == 'tutor') {
-                        if (tPost.userId == user._id || user.role == 'admin' || user.role == 'super') {
-                            next();
-                        } else {
-                            res.status(404).render('401', { msg: 'You can not view or edit this Post' });
-                        }
-                    } else {
-                        res.status(404).render('401', { msg: 'You can not view or edit this Post' });
-                    }
-                } else {
-                    res.status(404).render('401', { msg: 'No post found' });
-                }
-            }
-            else if (bookId) {
-                const tBook = await Book.findOne({ userId: user._id })
-                const bookOwner = await User.findOne({ _id: tBook.userID })
-                if (tBook) {
-                    if (bookOwner.role = 'super' && tBook.userID == user._id) {
-                        next();
-                    } else if (bookOwner.role == 'admin') {
-                        if (bookOwner.role == 'admin' && tBook.userID == user._id) {
-                            next();
-                        }
-                        else if (bookOwner.role == 'admin' && user.role == 'super') {
-                            next();
-                        } else {
-                            res.status(404).render('401', { msg: 'You can not view or edit this Book' });
-                        }
-                    } else if (bookOwner.role == 'user' || bookOwner.role == 'tutor') {
-                        if (tBook.userID == user._id || user.role == 'admin' || user.role == 'super') {
-                            next();
-                        } else {
-                            res.status(404).render('401', { msg: 'You can not view or edit this Book' });
-                        }
-                    } else {
-                        res.status(404).render('401', { msg: 'You can not view or edit this Book' });
-                    }
-                } else {
-                    res.status(404).render('401', { msg: 'No book found' });
-                }
-            }
-            else {
-                res.status(401).render('401', { msg: 'You are not sending any ID' });
-            }
-        } catch (err) {
-            res.status(404).render('401', { msg: 'You are not authorized user.' });
-        }
-    } catch (err) {
-        res.status(401).render('401', { msg: 'You are not Logged in.' });
-    }
-}
 const authVerify = async (req, res, next) => {
     const token = req.headers.token || req.cookies.token || req.query.token;
     const postId = req.params.postId;
@@ -147,7 +44,7 @@ const authVerify = async (req, res, next) => {
                     if (tUser.role == 'super') {
                         next();
                     } else if (tUser.role == 'admin') {
-                        if (tUser.role == 'admin' && tId == user._id) {
+                        if (tUser.role == 'admin' && tId == user._id.toString()) {
                             next();
                         } else if (tUser.role == 'admin' && user.role == 'super') {
                             next();
@@ -155,7 +52,7 @@ const authVerify = async (req, res, next) => {
                             res.status(404).render('401', { msg: 'You can not view or edit this account' });
                         }
                     } else if (tUser.role == 'user' || tUser.role == 'tutor') {
-                        if (tId == user._id || user.role == 'admin' || user.role == 'super') {
+                        if (tId == user._id.toString() || user.role == 'admin' || user.role == 'super') {
                             next();
                         } else {
                             res.status(404).render('401', { msg: 'You can not view or edit this account' });

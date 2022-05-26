@@ -266,7 +266,7 @@ function SideNav({ darkModeHandler, darkmode, mobileMenuShow, updateMobileMenuSt
                             </> :
                             <Link passHref href="/login">
                                 <a className={`flex items-center px-2 py-2 mt-2 text-gray-600 transition-colors duration-200 transform rounded-md dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700 ${router.pathname == '/book-store' ? 'bg-gray-200 dark:bg-gray-700 dark:text-gray-200 text-gray-700' : ''}`} >
-                                    <BiLogIn className={`w-5 h-5 rotate-180 ${menuExpanded == true ? '' : 'mx-auto'}`} />
+                                    <BiLogIn className={`w-5 h-5 ${menuExpanded == true ? '' : 'mx-auto'}`} />
                                     <span className={`mx-4 font-medium ${menuExpanded == true ? 'block' : 'hidden'}`}>Sign In</span>
                                 </a>
                             </Link>

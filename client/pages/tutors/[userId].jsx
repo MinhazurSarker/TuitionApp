@@ -122,7 +122,7 @@ function Tutor({ userData, token }) {
     const phoneCall = (e) => {
         e.preventDefault();
         if (userPhone) {
-            window.open(`tel:+8801610091869`, '_system');
+            window.open(`tel:+${userPhone}`, '_system');
         } else {
             Swal.fire({
                 title: 'Only for Tutors',

@@ -92,12 +92,12 @@ const authVerify = async (req, res, next) => {
                 try {
                     const tPost = await Post.findOne({ userID: user._id })
                     const postOwner = await User.findOne({ _id: tPost.userID.toString() })
-                    if (postOwner.role == 'super' && tPost.userID == user._id.toString()) {
+                    if (postOwner.role == 'super' && tPost.userID.toString() == user._id.toString()) {
                         req.body.userId = user._id;
                         req.body.role = user.role;
                         next();
                     } else if (postOwner.role == 'admin') {
-                        if (postOwner.role == 'admin' && tPost.userId == user._id.toString()) {
+                        if (postOwner.role == 'admin' && tPost.userID.toString() == user._id.toString()) {
                             req.body.userId = user._id;
                             req.body.role = user.role;
                             next();
@@ -110,7 +110,7 @@ const authVerify = async (req, res, next) => {
                             res.status(400).json({ msg: "UnAuthorized" })
                         }
                     } else if (postOwner.role == 'user' || postOwner.role == 'tutor') {
-                        if (tPost.userId == user._id.toString() || user.role == 'admin' || user.role == 'super') {
+                        if (tPost.userID.toString() == user._id.toString() || user.role == 'admin' || user.role == 'super') {
                             req.body.userId = user._id.toString();
                             req.body.role = user.role;
                             next();
