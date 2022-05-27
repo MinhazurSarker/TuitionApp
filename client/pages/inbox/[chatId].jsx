@@ -32,27 +32,26 @@ function ChatInbox({ messagesRes, currentUser, token, friendId }) {
                 chatId: data.chatId,
                 image: data.image,
                 createdAt: Date.now(),
-
             });
-            scrollRef.current.scroll({ top: scrollRef.current.scrollHeight })
-
         });
         socket.on("connect_error", (data) => {
             Swal.fire({
-                text: 'Error'
+                icon: 'info',
+                text: 'Quick refresh'
+            }) .then((result) => {
+                if (result.isConfirmed) {
+                    socket.disconnect();
+                    socket.emit('addUser', currentUser.toString())
+                }
             })
         });
     }, []);
     useEffect(() => {
         setMessages([...messages, arrivalMessage]);
-        scrollRef.current.scroll({ top: scrollRef.current.scrollHeight })
-
     }, [arrivalMessage]);
 
     useEffect(() => {
-        socket.emit('addUser', currentUser)
-        scrollRef.current.scroll({ top: scrollRef.current.scrollHeight })
-
+        socket.emit('addUser', currentUser.toString())
         return () => {
             socket.disconnect()
         };
@@ -69,7 +68,8 @@ function ChatInbox({ messagesRes, currentUser, token, friendId }) {
                     setMessages(messagesRes)
                     setCurrent(currentUser)
                     setFriend(friendId)
-                    socket.emit('addUser', currentUser)
+                    socket.emit('addUser', currentUser.toString())
+        
                 } else {
                     router.push('/login')
                 }
@@ -77,15 +77,20 @@ function ChatInbox({ messagesRes, currentUser, token, friendId }) {
         }
         return () => { socket.disconnect() };
     }, []);
+    useEffect(() => {
+        scrollToBottom()
+    });
 
+    function scrollToBottom() {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
     const handleSend = async (e) => {
         e.preventDefault();
-        socket.emit('sendMessage', { sender: current, receiverId: friend, chatId: router.query.chatId, text: text, image: image })
+        socket.emit('sendMessage', { sender: current.toString(), receiverId: friend.toString(), chatId: router.query.chatId, text: text, image: image })
         setMessages([...messages, { sender: current, chatId: router.query.chatId, text: text, image: image }])
         setText('');
         setImage(null)
-        scrollRef.current.scroll({ top: scrollRef.current.scrollHeight })
-
+    
         await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/message/`,
             {
                 chatId: router.query.chatId,
@@ -150,11 +155,10 @@ function ChatInbox({ messagesRes, currentUser, token, friendId }) {
                 <div className="max-w-screen-xl px-4  md:px-8 mx-auto">
                     <div className="flex flex-col items-center rounded-lg justify-center min-h-[85vh] bg-white dark:bg-slate-800 text-gray-800 bg:text-gray-200">
                         <div className="flex flex-col flex-grow w-full bg-white dark:bg-slate-800 shadow-xl rounded-lg overflow-hidden">
-                            <div ref={scrollRef} className=" flex flex-col flex-grow h-0 p-4 overflow-y-scroll">
+                            <div ref={scrollRef} className=" scroll-smooth flex flex-col flex-grow h-0 p-4 overflow-y-scroll">
                                 {messages.map((item, i) => (
                                     <MessageComp key={i} own={item.sender == current} img={item.image} text={item.text} time={item.createdAt} />
                                 ))}
-                                <div className="h-10 bg-red"></div>
                             </div>
                             <div className="bg-gray-300 flex flex-col dark:bg-slate-700 p-4">
                                 {image ?

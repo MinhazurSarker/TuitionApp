@@ -3,11 +3,12 @@ import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import axios from 'axios'
 import Link from "next/link";
 
-function HomeSlider() {
-    const ApiServer = process.env.NEXT_PUBLIC_API_URL
+function HomeSlider({ sliderData }) {
     const ServerRoot = process.env.NEXT_PUBLIC_BACKEND_URL
     const [slides, setSlides] = useState([])
     const [active, setActive] = useState(0)
+    const [play, setPlay] = useState(true)
+
     const handlePrev = () => {
         if (active == 0) {
             setActive(slides.length - 1)
@@ -22,12 +23,15 @@ function HomeSlider() {
             setActive(active + 1)
         }
     }
-    async function data() {
-        const data = await axios.get(`${ApiServer}/slides`)
-        setSlides(data.data.slides)
-    }
     useEffect(() => {
-        data()
+        setInterval(function(){ 
+            handleNext();
+            setPlay(!play)
+        }, 10000);
+    }, [play]);
+ 
+    useEffect(() => {
+        setSlides(sliderData.slides)
     }, []);
 
     return (

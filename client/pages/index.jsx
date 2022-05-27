@@ -14,7 +14,7 @@ import HomeSlider from '../components/HomeSlider';
 import { parseCookies } from 'nookies';
 
 
-export default function Home({token,posts,tutors}) {
+export default function Home({token,posts,tutors,slides}) {
   const[start,setStart]=useState(true)
   useEffect(() => {
     setStart(!start)
@@ -29,7 +29,7 @@ export default function Home({token,posts,tutors}) {
       <div className='flex 2xl:flex-row  xl:flex-row  lg:flex-row md:flex-col sm:flex-col flex-col '>
         <div className="2xl:basis-9/12 xl:basis-9/12 lg:basis-9/12 md:basis-full sm:basis-full basis-full h-full mb-8">
           <div className="max-w-screen-xl px-4 md:px-8 mx-auto">
-            <HomeSlider/>
+            <HomeSlider sliderData={slides}/>
           </div>
           <div className="max-w-screen-xl mt-12 px-4 md:px-8 mx-auto">
             <HomeTutorSection tutors={tutors} token={token} />
@@ -56,15 +56,18 @@ export async function getServerSideProps(ctx) {
   let token = parseCookies(ctx).authToken || null;
   const res1 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tutors/?page&div&dis&upo&uni&search`)
   const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/?page&div&dis&upo&uni&search`)
+  const res3 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/slides`)
 
   const tutors = await res1.json()
   const posts = await res2.json()
+  const slides = await res3.json()
 
   return {
       props: {
           token: token,
           tutors: tutors,
           posts: posts,
+          slides: slides,
       },
   };
 }
