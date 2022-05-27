@@ -6,8 +6,7 @@
     "dev": "node server.js",
     "build": "next build",
     "next-start": "next start",
-     "start": "node server.js"
-
+    "start": "NODE_ENV='production'node server.js"
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
