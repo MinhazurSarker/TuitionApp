@@ -20,6 +20,8 @@ const fs = require('fs')
 const appRoot = require('app-root-path');
 const Report = require('../models/Report');
 const Contact = require('../models/Contact');
+const Chat = require('../models/Chat');
+const Message = require('../models/Message');
 //---------------
 const jsonDB = new JsonDB(new Config("settingsData", true, false, '/'));
 const policiesDB = new JsonDB(new Config("policiesData", true, false, '/'));
@@ -49,12 +51,11 @@ const sendOTP = async (req, res) => {
     const phone = req.body.phone;
     if (phone.length == 13) {
         try {
-            const user = await User.findOne({ phone: phone })
-            if (user.role == 'admin' || user.role == 'super') {
+            const user = await User.findOne({ phone: req.body.phone })
+            if (user && (user.role == 'admin' || user.role == 'super')) {
                 const OTP = otpGenerator.generate(6, {
                     digits: true, lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false
                 });
-
                 if (smsAPIToken) {
                     if (smsGateway == 'alphaSMS') {
                         const options = {
@@ -90,7 +91,6 @@ const sendOTP = async (req, res) => {
                 return res.status(200).render('login', { msg: 'You are not an Admin' });
             }
 
-         
         } catch (err) {
             return res.status(200).render('login', { msg: err });
         }
@@ -202,7 +202,7 @@ const updateSlider = async (req, res) => {
     slider.img = imgPath;
     slider.save()
     res.redirect('back')
-   
+
 
 }
 const deleteSlider = async (req, res) => {
@@ -232,9 +232,9 @@ const newContact = async (req, res) => {
             lon: req.body.lon,
         });
         contact.save();
-        res.status(200).json({msg:'success'})  
+        res.status(200).json({ msg: 'success' })
     } catch (error) {
-        res.status(400).json({msg:'error'})  
+        res.status(400).json({ msg: 'error' })
     }
 
 }
@@ -519,6 +519,22 @@ const deletePost = async (req, res) => {
         res.render('404')
     }
 }
+const clearChat = async (req, res) => {
+    try {
+        await Message.deleteMany({})
+        res.redirect('back')
+    } catch (error) {
+        res.redirect('404')
+    }
+}
+const clearConvs = async (req, res) => {
+    try {
+        await Chat.deleteMany({})
+        res.redirect('back')
+    } catch (error) {
+        res.render('404')
+    }
+}
 const deleteBook = async (req, res) => {
     const bookId = req.params.bookId;
     try {
@@ -535,6 +551,8 @@ const deleteBook = async (req, res) => {
         res.render('404')
     }
 }
+
+
 const reportDelete = async (req, res) => {
     const reportId = req.params.reportId;
     try {
@@ -940,4 +958,6 @@ module.exports = {
     contactsView,
     contactView,
     contactDelete,
+    clearChat,
+    clearConvs,
 };

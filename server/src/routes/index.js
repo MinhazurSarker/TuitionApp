@@ -60,8 +60,9 @@ const {
     setAbout,
     contactsView,
     contactView,
-    contactDelete
-
+    contactDelete,
+    clearChat,
+    clearConvs,
 
 
 } = require('../controllers/adminPanelController')
@@ -83,6 +84,8 @@ router.post('/login/verify',OTPverify);
 router.get('/',                                     adminVerify,       indexView );
 //--------Settings---       
 router.get('/settings',                             adminVerify,       settingsView );
+router.get('/settings/clear-chats',                 superAdminVerify,  clearChat );
+router.get('/settings/clear-convs',                 superAdminVerify,  clearConvs );
 router.get('/settings/divission',                   adminVerify,       viewDivission );
 router.get('/settings/district',                    adminVerify,       viewDistrict );
 router.get('/settings/upozilla',                    adminVerify,       viewUpozilla );

@@ -2,12 +2,13 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { useEffect, useRef, useState } from "react";
-import { BiSend } from "react-icons/bi";
+import { BiChevronLeft, BiSend } from "react-icons/bi";
 import { BsImage } from "react-icons/bs";
 import Swal from "sweetalert2";
 import MessageComp from "../../components/MessageComp";
 import { io } from "socket.io-client";
 import head from "next/head";
+import Link from "next/link";
 
 function ChatInbox({ messagesRes, currentUser, token, friendId }) {
     const socket = io(process.env.NEXT_PUBLIC_SOCKET_SERVER);
@@ -38,7 +39,7 @@ function ChatInbox({ messagesRes, currentUser, token, friendId }) {
             Swal.fire({
                 icon: 'info',
                 text: 'Quick refresh'
-            }) .then((result) => {
+            }).then((result) => {
                 if (result.isConfirmed) {
                     socket.disconnect();
                     socket.emit('addUser', currentUser.toString())
@@ -69,7 +70,7 @@ function ChatInbox({ messagesRes, currentUser, token, friendId }) {
                     setCurrent(currentUser)
                     setFriend(friendId)
                     socket.emit('addUser', currentUser.toString())
-        
+
                 } else {
                     router.push('/login')
                 }
@@ -90,7 +91,7 @@ function ChatInbox({ messagesRes, currentUser, token, friendId }) {
         setMessages([...messages, { sender: current, chatId: router.query.chatId, text: text, image: image }])
         setText('');
         setImage(null)
-    
+
         await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/message/`,
             {
                 chatId: router.query.chatId,
@@ -154,7 +155,14 @@ function ChatInbox({ messagesRes, currentUser, token, friendId }) {
             <div className=" basis-full h-full lg:mb-8 md:mb-6 sm:mb-4 mb-2">
                 <div className="max-w-screen-xl px-4  md:px-8 mx-auto">
                     <div className="flex flex-col items-center rounded-lg justify-center min-h-[85vh] bg-white dark:bg-slate-800 text-gray-800 bg:text-gray-200">
-                        <div className="flex flex-col flex-grow w-full bg-white dark:bg-slate-800 shadow-xl rounded-lg overflow-hidden">
+                        <div className="h-10  w-full bg-gray-300 flex items-center dark:bg-slate-700 shadow-xl rounded-t-lg">
+                            <Link passHref href="/inbox">
+                                <a className={`text-gray-900 transition-colors duration-200 transform rounded-md dark:text-gray-400  dark:hover:text-gray-100 hover:text-gray-500`} >
+                                    <BiChevronLeft className={`w-8 h-8`} />
+                                </a>
+                            </Link>
+                        </div>
+                        <div className="flex flex-col flex-grow w-full bg-white dark:bg-slate-800 shadow-xl rounded-b-lg overflow-hidden">
                             <div ref={scrollRef} className=" scroll-smooth flex flex-col flex-grow h-0 p-4 overflow-y-scroll">
                                 {messages.map((item, i) => (
                                     <MessageComp key={i} own={item.sender == current} img={item.image} text={item.text} time={item.createdAt} />
