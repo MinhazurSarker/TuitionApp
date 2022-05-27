@@ -11,7 +11,11 @@ function Upgrade({ userData, token, plans }) {
         if (!token || token == null) {
             router.push('/login')
         } else {
-            setUserRefs(userData.user.refs)
+            if (userData) {
+                setUserRefs(userData.user.refs)
+            } else {
+                router.push('/login')
+            }
         }
         return () => {
         };
@@ -51,22 +55,30 @@ function Upgrade({ userData, token, plans }) {
 }
 export async function getServerSideProps(ctx) {
     let token = parseCookies(ctx).authToken || null;
-
-    const userRes = await fetch(`${process.env.API_URL}/my-profile`, {
-        headers: {
-            token: token
-        }
-    })
-    const plansRes = await fetch(`${process.env.API_URL}/plans`,)
-
-    const user = await userRes.json()
-    const plans = await plansRes.json()
-    return {
-        props: {
-            userData: user,
-            token: token,
-            plans: plans.plans
-        },
-    };
+    if (token) {
+        const userRes = await fetch(`${process.env.API_URL}/my-profile`, {
+            headers: {
+                token: token
+            }
+        })
+        const plansRes = await fetch(`${process.env.API_URL}/plans`,)
+        const user = await userRes.json()
+        const plans = await plansRes.json()
+        return {
+            props: {
+                userData: user,
+                token: token,
+                plans: plans.plans
+            },
+        };
+    } else {
+        return {
+            props: {
+                userData: null,
+                token: null,
+                plans: null
+            },
+        };
+    }
 }
 export default Upgrade;

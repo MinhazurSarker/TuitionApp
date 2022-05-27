@@ -56,17 +56,19 @@ function LikedPosts({ token, postsArray }) {
             })
         }
     }
-
-
     useEffect(() => {
         if (!token || token == null) {
             router.push('/login')
         } else {
-            console.log(postsArray)
-            setPostData(postsArray.data);
-            setPages(postsArray.pages);
-            setCurrent(postsArray.current);
-            setStart(!start)
+            if (postsArray) {
+                console.log(postsArray)
+                setPostData(postsArray.data);
+                setPages(postsArray.pages);
+                setCurrent(postsArray.current);
+                setStart(!start)
+            } else {
+                router.push('/login')
+            }
         }
         return () => {
         };
@@ -140,19 +142,27 @@ function LikedPosts({ token, postsArray }) {
 }
 export async function getServerSideProps(ctx) {
     let token = parseCookies(ctx).authToken || null;
-
-    const res = await fetch(`${process.env.API_URL}/liked-posts/?page=${ctx.query.page || 1}&search=${ctx.query.search || ''}`, {
-        headers: {
-            token: token
-        }
-    })
-    const posts = await res.json()
-    return {
-        props: {
-            postsArray: posts,
-            token: token
-        },
-    };
+    if (token) {
+        const res = await fetch(`${process.env.API_URL}/liked-posts/?page=${ctx.query.page || 1}&search=${ctx.query.search || ''}`, {
+            headers: {
+                token: token
+            }
+        })
+        const posts = await res.json()
+        return {
+            props: {
+                postsArray: posts,
+                token: token
+            },
+        };
+    } else {
+        return {
+            props: {
+                postsArray: null,
+                token: null
+            },
+        };
+    }
 }
 
 export default LikedPosts;

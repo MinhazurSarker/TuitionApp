@@ -1,4 +1,4 @@
-import  head  from 'next/head';
+import head from 'next/head';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
@@ -14,15 +14,20 @@ function Notifications({ notificationsData, token }) {
     const [lastPage, setLastPage] = useState(false);
     useEffect(() => {
         if (!token || token == null) {
-            router.push('/login')
+            router.push('/login');
         } else {
-            setNotifications(notificationsData.notifications);
+            if (notificationsData) {
+                setNotifications(notificationsData.notifications);
+                setPages(notificationsData.pages);
+            } else {
+                router.push('/login');
+            }
         }
         return () => {
         };
 
     }, []);
-    
+
     const prevPage = (e) => {
         if (current > 1) {
             setCurrent(current - 1)
@@ -87,17 +92,27 @@ function Notifications({ notificationsData, token }) {
 }
 export async function getServerSideProps(ctx) {
     let token = parseCookies(ctx).authToken || null;
-    const res = await fetch(`${process.env.API_URL}/my-profile/notifications?page=${ctx.query.page || 1}`, {
-        headers: {
-            token: token
-        }
-    })
-    const notifications = await res.json()
-    return {
-        props: {
-            notificationsData: notifications,
-            token: token
-        },
-    };
+    if (token) {
+        const res = await fetch(`${process.env.API_URL}/my-profile/notifications?page=${ctx.query.page || 1}`, {
+            headers: {
+                token: token
+            }
+        })
+        const notifications = await res.json()
+        return {
+            props: {
+                notificationsData: notifications,
+                token: token
+            },
+        };
+    } else {
+        return {
+            props: {
+                notificationsData: null,
+                token: token
+            },
+        };
+    }
+
 }
 export default Notifications;

@@ -65,11 +65,14 @@ function ChatInbox({ messagesRes, currentUser, token, friendId }) {
             if (!token || token == null) {
                 router.push('/login')
             } else {
-                setMessages(messagesRes)
-                setCurrent(currentUser)
-                setFriend(friendId)
-                socket.emit('addUser', currentUser)
-                scrollRef.current.scroll({ top: scrollRef.current.scrollHeight })
+                if (messagesRes && currentUser && friendId) {
+                    setMessages(messagesRes)
+                    setCurrent(currentUser)
+                    setFriend(friendId)
+                    socket.emit('addUser', currentUser)
+                } else {
+                    router.push('/login')
+                }
             }
         }
         return () => { socket.disconnect() };
@@ -178,20 +181,32 @@ function ChatInbox({ messagesRes, currentUser, token, friendId }) {
 export async function getServerSideProps(ctx) {
 
     const token = parseCookies(ctx).authToken || null
-    const res = await fetch(`${process.env.API_URL}/messages/${ctx.query.chatId}`, {
-        headers: {
-            token: token
-        }
-    })
-    const data = await res.json()
-    return {
-        props: {
-            messagesRes: data.messages,
-            currentUser: data.currentUser,
-            friendId: data.friendId,
-            token: token
-        },
-    };
+
+    if (token) {
+        const res = await fetch(`${process.env.API_URL}/messages/${ctx.query.chatId}`, {
+            headers: {
+                token: token
+            }
+        })
+        const data = await res.json()
+        return {
+            props: {
+                messagesRes: data.messages,
+                currentUser: data.currentUser,
+                friendId: data.friendId,
+                token: token
+            },
+        };
+    } else {
+        return {
+            props: {
+                messagesRes: null,
+                currentUser: null,
+                friendId: null,
+                token: null
+            },
+        };
+    }
 }
 export default ChatInbox;
 

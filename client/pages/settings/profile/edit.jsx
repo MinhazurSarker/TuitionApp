@@ -59,30 +59,35 @@ function Edit({ userData, token }) {
         if (!token || token == null) {
             router.push('/login')
         } else {
-            setStart(!start)
-            setUserId(userData.user._id);
-            setUserName(userData.user.name);
-            setEmail(userData.user.email);
-            setUserBio(userData.user.bio);
-            setUserClass(userData.user.class);
-            setUserSubjects(userData.user.subjects);
-            setUserAge(userData.user.age);
-            setUserInstitute(userData.user.institute);
-            setUserDepartment(userData.user.department);
-            setUserGender(userData.user.gender);
-            setUserRole(userData.user.role);
-            setUserCover(userData.user.coverImg);
-            setUserAvatar(userData.user.avatarImg);
-            setDivission(userData.user.divission);
-            setDistrict(userData.user.district);
-            setUpozilla(userData.user.upozilla);
-            setUnion(userData.user.union);
-            setStart(!start);
-            if (userData.user.education.length !== 0) {
-                // setEducation([{ exam: '', dep: '', result: '', year: '', institute: '' }]);
-                setEducation(userData.user.education);
+            if (userData) {
+                setStart(!start)
+                setUserId(userData.user._id);
+                setUserName(userData.user.name);
+                setEmail(userData.user.email);
+                setUserBio(userData.user.bio);
+                setUserClass(userData.user.class);
+                setUserSubjects(userData.user.subjects);
+                setUserAge(userData.user.age);
+                setUserInstitute(userData.user.institute);
+                setUserDepartment(userData.user.department);
+                setUserGender(userData.user.gender);
+                setUserRole(userData.user.role);
+                setUserCover(userData.user.coverImg);
+                setUserAvatar(userData.user.avatarImg);
+                setDivission(userData.user.divission);
+                setDistrict(userData.user.district);
+                setUpozilla(userData.user.upozilla);
+                setUnion(userData.user.union);
+                setStart(!start);
+                if (userData.user.education.length !== 0) {
+                    // setEducation([{ exam: '', dep: '', result: '', year: '', institute: '' }]);
+                    setEducation(userData.user.education);
+                }
+                setLoading(false);
+            } else {
+                router.push('/login')
             }
-            setLoading(false);
+
         }
     }, []);
 
@@ -195,7 +200,7 @@ function Edit({ userData, token }) {
         }).catch((res) => {
             Swal.fire({
                 title: 'OOps',
-                text: res||'Something went wrong',
+                text: res || 'Something went wrong',
                 icon: 'error',
                 confirmButtonColor: '#6366f1',
                 confirmButtonText: 'Ok',
@@ -397,27 +402,37 @@ function Edit({ userData, token }) {
 }
 export async function getServerSideProps(ctx) {
     let token = parseCookies(ctx).authToken || null;
-    let res;
-    try {
-        res = await fetch(`${process.env.API_URL}/my-profile`, {
-            headers: {
+    if (token) {
+        let res;
+        try {
+            res = await fetch(`${process.env.API_URL}/my-profile`, {
+                headers: {
+                    token: token
+                }
+            })
+        } catch (error) {
+            res = await fetch(`${process.env.API_URL}/my-profile`, {
+                headers: {
+                    token: token
+                }
+            })
+        }
+        const user = await res.json()
+        return {
+            props: {
+                userData: user,
                 token: token
-            }
-        })
-    } catch (error) {
-        res = await fetch(`${process.env.API_URL}/my-profile`, {
-            headers: {
-                token: token
-            }
-        })
+            },
+        };
+    } else {
+        return {
+            props: {
+                userData: null,
+                token: null
+            },
+        };
     }
-    const user = await res.json()
-    return {
-        props: {
-            userData: user,
-            token: token
-        },
-    };
+
 }
 
 export default Edit;

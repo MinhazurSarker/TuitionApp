@@ -13,8 +13,12 @@ function Inbox({ chats, current, token }) {
         if (!token || token == null) {
             router.push('/login')
         } else {
-            setChatsArray(chats)
-            setCurrentUserId(current)
+            if (current && chats) {
+                setChatsArray(chats)
+                setCurrentUserId(current)
+            } else {
+                router.push('/login')
+            }
         }
         return () => {
         };
@@ -44,14 +48,13 @@ function Inbox({ chats, current, token }) {
 
 export async function getServerSideProps(ctx) {
     let token = parseCookies(ctx).authToken || null;
-    const res = await fetch(`${process.env.API_URL}/chats/`, {
-        headers: {
-            token: token
-        }
-    })
-    const data = await res.json()
-
-    if (data.chats) {
+    if (token) {
+        const res = await fetch(`${process.env.API_URL}/chats/`, {
+            headers: {
+                token: token
+            }
+        })
+        const data = await res.json()
         return {
             props: {
                 chats: data.chats,
@@ -62,9 +65,9 @@ export async function getServerSideProps(ctx) {
     } else {
         return {
             props: {
-                chats: [],
+                chats: null,
                 current: null,
-                token: token
+                token: null
             },
         };
     }

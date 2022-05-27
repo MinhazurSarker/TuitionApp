@@ -3,22 +3,14 @@ import Link from 'next/link';
 import {  useEffect, useState } from 'react';
 
 import TutorCard from './TutorCard'
-function HomeTutorSection({ token }) {
-    const ApiServer = process.env.NEXT_PUBLIC_API_URL
-    const ServerRoot = process.env.NEXT_PUBLIC_ROOT_URL
-
+function HomeTutorSection({ token,tutors }) {
     const [tutorData, setTutorData] = useState([]);
 
     useEffect(() => {
-        fetchData()
-        return () => { };
-    }, []);
-
-    async function fetchData() {
-        await (await fetch(`${ApiServer}/tutors/?page&div&dis&upo&uni&search`)).json().then(data => {
-            setTutorData(data.data);
-        })
-    }
+        if(tutors){
+            setTutorData(tutors.data);
+        }
+    }, [tutors]);
     console.clear()
     return (
         <>

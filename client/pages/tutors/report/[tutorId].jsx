@@ -96,7 +96,7 @@ export async function getServerSideProps(ctx) {
         return {
             props: {
                 userData: null,
-                token: token
+                token: null
             },
         };
     }

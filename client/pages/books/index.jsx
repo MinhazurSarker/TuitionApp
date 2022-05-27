@@ -8,7 +8,7 @@ import { AiOutlineLeft, AiOutlineRight, AiOutlineUndo } from 'react-icons/ai';
 import { BiSearch } from 'react-icons/bi';
 import BookCard from '../../components/BookCard';
 import head from 'next/head';
-function Books({ token, booksArray }) {
+function Books({ booksArray }) {
 
     const router = useRouter();
 
@@ -59,18 +59,14 @@ function Books({ token, booksArray }) {
 
 
     useEffect(() => {
-        if (!token || token == null) {
-            router.push('/login')
-        } else {
-            console.log(booksArray)
-            setPostData(booksArray.data);
-            setPages(booksArray.pages);
-            setCurrent(booksArray.current);
-            setStart(!start)
-        }
+            if (booksArray) {
+                setPostData(booksArray.data);
+                setPages(booksArray.pages);
+                setCurrent(booksArray.current);
+                setStart(!start)
+            }
         return () => {
         };
-
     }, [booksArray]);
 
     return (
@@ -121,18 +117,13 @@ function Books({ token, booksArray }) {
     );
 }
 export async function getServerSideProps(ctx) {
-    let token = parseCookies(ctx).authToken || null;
+   
 
-    const res = await fetch(`${process.env.API_URL}/books/?page=${ctx.query.page || 1}&search=${ctx.query.search || ''}`, {
-        headers: {
-            token: token
-        }
-    })
+    const res = await fetch(`${process.env.API_URL}/books/?page=${ctx.query.page || 1}&search=${ctx.query.search || ''}`)
     const books = await res.json()
     return {
         props: {
             booksArray: books,
-            token: token
         },
     };
 }

@@ -37,15 +37,18 @@ function Profile({ userData, token }) {
         if (!token || token == null) {
             router.push('/login')
         } else {
-            setUserDataNew(userData.user);
-            setUserRole(userData.user.role);
-            setUserAvatar(userData.user.avatarImg);
-            setUserCover(userData.user.coverImg);
-            setUserGender(userData.user.gender);
-            setDegrees(userData.user.education)
-            setPosts(userData.user.posts)
-            setRatings(userData.user.ratings)
-
+            if (userData) {
+                setUserDataNew(userData.user);
+                setUserRole(userData.user.role);
+                setUserAvatar(userData.user.avatarImg);
+                setUserCover(userData.user.coverImg);
+                setUserGender(userData.user.gender);
+                setDegrees(userData.user.education)
+                setPosts(userData.user.posts)
+                setRatings(userData.user.ratings)
+            }else{
+                router.push('/login')
+            }
         }
         return () => {
         };
@@ -112,9 +115,9 @@ function Profile({ userData, token }) {
     if (!userAvatar || userAvatar === "") {
         if (userGender == 'male') {
             profileImg = `/boy.svg`
-        } else if(userGender=="female") {
+        } else if (userGender == "female") {
             profileImg = `/girl.svg`
-        }else{
+        } else {
             profileImg = `/boy.svg`
         }
     } else {
@@ -154,8 +157,8 @@ function Profile({ userData, token }) {
                                         </Link>
                                     </div>
                                     <div className=" w-full mt-2 items-center mb-3 ">
-                                        <div className={`flex mx-4 top-0 justify-center px-4 py-4 rounded-lg   ${userRole=='user'?'bg-slate-100 dark:bg-indigo-500/10':userRole=='tutor'?'bg-green-600':userRole=='super'?'bg-green-600':userRole=='admin'?'bg-green-600':'bg-slate-100 dark:bg-indigo-500/10'}`}>
-                                            <p className='text-gray-800 font-semibold text-center text-xl dark:text-gray-200'>You are a {userRole=='user'?'Student':userRole=='tutor'?'Tutor':userRole=='super'?'Super Admin':userRole=='admin'?'Admin':'User'}</p>
+                                        <div className={`flex mx-4 top-0 justify-center px-4 py-4 rounded-lg   ${userRole == 'user' ? 'bg-slate-100 dark:bg-indigo-500/10' : userRole == 'tutor' ? 'bg-green-600' : userRole == 'super' ? 'bg-green-600' : userRole == 'admin' ? 'bg-green-600' : 'bg-slate-100 dark:bg-indigo-500/10'}`}>
+                                            <p className='text-gray-800 font-semibold text-center text-xl dark:text-gray-200'>You are a {userRole == 'user' ? 'Student' : userRole == 'tutor' ? 'Tutor' : userRole == 'super' ? 'Super Admin' : userRole == 'admin' ? 'Admin' : 'User'}</p>
                                         </div>
                                     </div>
                                     <div className=" w-full mt-2 items-center mb-3 ">
@@ -268,7 +271,6 @@ function Profile({ userData, token }) {
                         <div className="  w-11/12 px-8 mx-auto">
                             <div className="flex justify-center items-center gap-4 ">
                                 <h2 className="text-gray-800 dark:text-gray-200 text-2xl lg:text-3xl font-bold">My Posts</h2>
-
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-2 lg:gap-4">
                                 {posts.map((post, index) => (
@@ -352,20 +354,27 @@ function Profile({ userData, token }) {
 
 export async function getServerSideProps(ctx) {
     let token = parseCookies(ctx).authToken || null;
-
-    const res = await fetch(`${process.env.API_URL}/my-profile`, {
-        headers: {
-            token: token
-        }
-    })
-
-    const user = await res.json()
-    return {
-        props: {
-            userData: user,
-            token: token
-        },
-    };
+    if (token) {
+        const res = await fetch(`${process.env.API_URL}/my-profile`, {
+            headers: {
+                token: token
+            }
+        })
+        const user = await res.json()
+        return {
+            props: {
+                userData: user,
+                token: token
+            },
+        };
+    } else {
+        return {
+            props: {
+                userData: null,
+                token: null
+            },
+        };
+    }
 }
 
 export default Profile;

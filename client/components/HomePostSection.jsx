@@ -3,23 +3,16 @@ import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../pages/_app";
 import PostCard from "./PostCard";
 
-function HomePostSection({ start }) {
-    const {  token } = useContext(AppContext);
-
+function HomePostSection({ token,posts }) {
     const [postData, setPostData] = useState([]);
 
     useEffect(() => {
-        fetchData()
-        return () => { };
-    }, [start]);
-
-    async function fetchData() {
-        await (await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/?page&div&dis&upo&uni&search`)).json().then(data => {
-            setPostData(data.data);
-
-        })
-    }
+        if(posts){
+            setPostData(posts.data);
+        }
+    }, [posts]);
     console.clear()
+    // console.log(posts)
 
     return (
         <>

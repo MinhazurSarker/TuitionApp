@@ -62,11 +62,14 @@ function MyArea({ token, tutorsArray }) {
         if (!token || token == null) {
             router.push('/login')
         } else {
-            console.log(tutorsArray)
-            setTutorData(tutorsArray.data);
-            setPages(tutorsArray.pages);
-            setCurrent(tutorsArray.current);
-            setStart(!start)
+            if (tutorsArray) {
+                setTutorData(tutorsArray.data);
+                setPages(tutorsArray.pages);
+                setCurrent(tutorsArray.current);
+                setStart(!start)
+            } else {
+                router.push('/login')
+            }
         }
         return () => {
         };
@@ -135,19 +138,27 @@ function MyArea({ token, tutorsArray }) {
 
 export async function getServerSideProps(ctx) {
     let token = parseCookies(ctx).authToken || null;
-
-    const res = await fetch(`${process.env.API_URL}/tutors/my-area?page=${ctx.query.page || 1}&search=${ctx.query.search || ''}`, {
-        headers: {
-            token: token
-        }
-    })
-    const tutors = await res.json()
-    return {
-        props: {
-            tutorsArray: tutors,
-            token: token
-        },
-    };
+    if (token) {
+        const res = await fetch(`${process.env.API_URL}/tutors/my-area?page=${ctx.query.page || 1}&search=${ctx.query.search || ''}`, {
+            headers: {
+                token: token
+            }
+        })
+        const tutors = await res.json()
+        return {
+            props: {
+                tutorsArray: tutors,
+                token: token
+            },
+        };
+    } else {
+        return {
+            props: {
+                tutorsArray: null,
+                token: null
+            },
+        };
+    }
 }
 
 export default MyArea;

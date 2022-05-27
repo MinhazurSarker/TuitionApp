@@ -26,7 +26,11 @@ function Settings({ user, token }) {
         if (!token || token == null) {
             router.push('/login')
         } else {
-            setUserData(user.user)
+            if (user) {
+                setUserData(user.user)
+            } else {
+                router.push('/login')
+            }
         }
         return () => {
         };
@@ -76,7 +80,7 @@ function Settings({ user, token }) {
             }
         })
     }
-    const coppyRef =(e)=>{
+    const coppyRef = (e) => {
         e.preventDefault();
         navigator.clipboard.writeText(`${window.location.origin}/login?ref=${userData._id}`);
         Swal.fire({
@@ -90,9 +94,9 @@ function Settings({ user, token }) {
         <>
 
             <div className="flex flex-row ">
-            <head>
-                <title>TuitionApp - Settings</title>
-            </head>
+                <head>
+                    <title>TuitionApp - Settings</title>
+                </head>
                 <div className="w-full h-full">
                     <div className="max-w-screen-xl px-4 md:px-8 mx-auto">
 
@@ -158,9 +162,9 @@ function Settings({ user, token }) {
                                         <h2 className="text-indigo-500 text-xl md:text-2xl font-bold">Refer to a friend and get points</h2>
                                         <p className="text-gray-600 dark:text-gray-200">You can use those points to upgrade your account.Click copy to copy your referral link.</p>
                                     </div>
-                 
-                                        <button onClick={event=>coppyRef(event)} className="inline-block bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus-visible:ring ring-indigo-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3">Copy</button>
-                                   
+
+                                    <button onClick={event => coppyRef(event)} className="inline-block bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus-visible:ring ring-indigo-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3">Copy</button>
+
                                 </div>
                             </div>
                         </div>
@@ -177,19 +181,26 @@ function Settings({ user, token }) {
 
 export async function getServerSideProps(ctx) {
     let token = parseCookies(ctx).authToken || null;
-
-    const res = await fetch(`${process.env.API_URL}/my-profile`, {
-        headers: {
-            token: token
-        }
-    })
-
-    const user = await res.json()
-    return {
-        props: {
-            user: user,
-            token: token
-        },
-    };
+    if (token) {
+        const res = await fetch(`${process.env.API_URL}/my-profile`, {
+            headers: {
+                token: token
+            }
+        })
+        const user = await res.json()
+        return {
+            props: {
+                user: user,
+                token: token
+            },
+        };
+    } else {
+        return {
+            props: {
+                user: null,
+                token: null
+            },
+        };
+    }
 }
 export default Settings;
