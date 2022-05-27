@@ -101,7 +101,7 @@ function Settings({ user, token }) {
                     <div className="max-w-screen-xl px-4 md:px-8 mx-auto">
 
                         <div className="max-w-screen-2xl px-4 mb-8 md:px-8 mx-auto">
-                            <div className="flex flex-col sm:flex-row justify-between items-center bg-slate-200 dark:bg-slate-800 rounded-lg gap-4 p-4 md:p-8 shadow-lg">
+                            <div className="flex flex-col sm:flex-row justify-between items-center bg-white dark:bg-slate-800 rounded-lg gap-4 p-4 md:p-8 shadow-lg">
                                 <div>
                                     <h2 className="text-indigo-500 text-xl md:text-2xl text-center md:text-left font-bold">Create Post</h2>
                                     <p className="text-gray-600 dark:text-gray-200">Create post and ask for a tutor</p>
@@ -112,7 +112,7 @@ function Settings({ user, token }) {
                             </div>
                         </div>
                         <div className="max-w-screen-2xl px-4 mb-8 md:px-8 mx-auto">
-                            <div className="flex flex-col sm:flex-row justify-between items-center bg-slate-200 dark:bg-slate-800 rounded-lg gap-4 p-4 md:p-8 shadow-lg">
+                            <div className="flex flex-col sm:flex-row justify-between items-center bg-white dark:bg-slate-800 rounded-lg gap-4 p-4 md:p-8 shadow-lg">
                                 <div>
                                     <h2 className="text-indigo-500 text-xl md:text-2xl text-center md:text-left font-bold">Edit Profile</h2>
                                     <p className="text-gray-600 dark:text-gray-200">Edit your profile information</p>
@@ -123,7 +123,7 @@ function Settings({ user, token }) {
                             </div>
                         </div>
                         <div className="max-w-screen-2xl px-4 mb-8 md:px-8 mx-auto">
-                            <div className="flex flex-col sm:flex-row justify-between items-center bg-slate-200 dark:bg-slate-800 rounded-lg gap-4 p-4 md:p-8 shadow-lg">
+                            <div className="flex flex-col sm:flex-row justify-between items-center bg-white dark:bg-slate-800 rounded-lg gap-4 p-4 md:p-8 shadow-lg">
                                 <div>
                                     <h2 className="text-indigo-500 text-xl md:text-2xl font-bold">Upgrade Account</h2>
                                     <p className="text-gray-600 dark:text-gray-200">Become a tutor or upgrade subscription</p>
@@ -134,7 +134,7 @@ function Settings({ user, token }) {
                             </div>
                         </div>
                         <div className="max-w-screen-2xl px-4 mb-8 md:px-8 mx-auto">
-                            <div className="flex flex-col sm:flex-row justify-between items-center bg-slate-200 dark:bg-slate-800 rounded-lg gap-4 p-4 md:p-8 shadow-lg">
+                            <div className="flex flex-col sm:flex-row justify-between items-center bg-white dark:bg-slate-800 rounded-lg gap-4 p-4 md:p-8 shadow-lg">
                                 <div>
                                     <h2 className="text-indigo-500 text-xl md:text-2xl font-bold">Notifications</h2>
                                     <p className="text-gray-600 dark:text-gray-200">Check out all the notifications</p>
@@ -146,7 +146,7 @@ function Settings({ user, token }) {
                         </div>
                         <div className="flex basis-1 md:basis-2">
                             <div className="w-full px-4 mb-8 md:px-8 mx-auto">
-                                <div className="flex flex-col sm:flex-row justify-between items-center bg-slate-200 dark:bg-slate-800 rounded-lg gap-4 p-4 md:p-8 shadow-lg">
+                                <div className="flex flex-col sm:flex-row justify-between items-center bg-white dark:bg-slate-800 rounded-lg gap-4 p-4 md:p-8 shadow-lg">
                                     <div>
                                         <h2 className="text-indigo-500 text-xl md:text-2xl font-bold">Delete Account</h2>
                                         <p className="text-gray-600 dark:text-gray-200">All of your details and subscriptions will be deleted. You would not get any refund</p>
@@ -157,7 +157,7 @@ function Settings({ user, token }) {
                                 </div>
                             </div>
                             <div className="w-full px-4 mb-8 md:px-8 mx-auto">
-                                <div className="flex flex-col sm:flex-row justify-between items-center bg-slate-200 dark:bg-slate-800 rounded-lg gap-4 p-4 md:p-8 shadow-lg">
+                                <div className="flex flex-col sm:flex-row justify-between items-center bg-white dark:bg-slate-800 rounded-lg gap-4 p-4 md:p-8 shadow-lg">
                                     <div>
                                         <h2 className="text-indigo-500 text-xl md:text-2xl font-bold">Refer to a friend and get points</h2>
                                         <p className="text-gray-600 dark:text-gray-200">You can use those points to upgrade your account.Click copy to copy your referral link.</p>
