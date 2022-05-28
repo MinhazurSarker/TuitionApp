@@ -102,7 +102,7 @@ const LoginOrCreateUser = async (req, res) => {
                     await OTPModel.deleteMany({ phone: rightOtpFind.phone });
                     res.status(200).json({ authType: "login", token: token, user: user })
                 } else if (rightOtpFind.phone === req.body.phone && validOTP) {
-                    const newUser = new User({ phone: reqPhone })
+                    const newUser = new User({ phone: reqPhone,refs:0,role:'user' })
                     await newUser.save();
                     const payload = {
                         userId: newUser._id
