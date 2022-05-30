@@ -117,7 +117,7 @@ function SideNav({ darkModeHandler, darkmode, mobileMenuShow, updateMobileMenuSt
                             <Link passHref href="/followings">
                                 <a className={`flex items-center px-2 py-2 mt-2 text-gray-600 transition-colors duration-200 transform rounded-md dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700 ${router.pathname == `/followings` || router.pathname == `/user/[userId]` ? 'bg-gray-200 dark:bg-gray-700 dark:text-gray-200 text-gray-700' : ''}`} >
                                     <BiHeart className={`w-5 h-5 `} />
-                                    <span className="mx-4 font-medium">Followings</span>
+                                    <span className="mx-4 font-medium">Favorites</span>
                                 </a>
                             </Link>
                             <Link passHref href="/books">
@@ -213,7 +213,7 @@ function SideNav({ darkModeHandler, darkmode, mobileMenuShow, updateMobileMenuSt
                             <Link passHref href="/followings">
                                 <a className={`flex items-center px-2 py-2 mt-2 text-gray-600 transition-colors duration-200 transform rounded-md dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700 ${router.pathname == `/followings` || router.pathname == `/user/[userId]` ? 'bg-gray-200 dark:bg-gray-700 dark:text-gray-200 text-gray-700' : ''}`} >
                                     <BiHeart className={`w-5 h-5 ${menuExpanded == true ? '' : 'mx-auto'}`} />
-                                    <span className={`mx-4 font-medium  ${menuExpanded == true ? 'block' : 'hidden'}`}>Followings</span>
+                                    <span className={`mx-4 font-medium  ${menuExpanded == true ? 'block' : 'hidden'}`}>Favorites</span>
                                 </a>
                             </Link>
                             <Link passHref href="/books">

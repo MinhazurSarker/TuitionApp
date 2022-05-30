@@ -85,7 +85,7 @@ function Followings({ token, tutorsArray }) {
                     <div className="flex justify-between items-center gap-4 mb-6">
                         <h2 className="text-gray-800 dark:text-gray-200 text-2xl lg:text-3xl font-bold">Following users</h2>
                         <Link href="/followings/posts">
-                            <a className="inline-block bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus-visible:ring ring-indigo-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-2">Liked posts</a>
+                            <a className="inline-block bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus-visible:ring ring-indigo-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-2">Favorite posts</a>
                         </Link>
                     </div>
                     <div className={`flex w-full justify-between items-center gap-4 mb-6 h-full`} >
