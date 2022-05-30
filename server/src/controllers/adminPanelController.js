@@ -192,7 +192,7 @@ const updateSlider = async (req, res) => {
     slider.title = req.body.title;
     slider.heading = req.body.heading;
     slider.text = req.body.text;
-    slider.btn = req.body.btn;
+    // slider.btn = req.body.btn;
     slider.url = req.body.url;
     slider.img = imgPath;
     slider.save()
