@@ -1,6 +1,7 @@
 
 # dependencies
 /node_modules
+/public/uploads
 # testing
 
 # next.js

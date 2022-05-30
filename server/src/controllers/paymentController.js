@@ -98,9 +98,8 @@ const payment = async (req, res) => {
   }
 }
 //---------------------
-var dashboardDB = new JsonDB(new Config("dashboardData", true, false, '/'));
-const totalIncome = dashboardDB.getData("/income");
 
+var dashboardDB = new JsonDB(new Config("dashboardData", true, false, '/'));
 const callBack = async (req, res) => {
   const { pay_status, mer_txnid } = req.body;
   try {
@@ -114,6 +113,7 @@ const callBack = async (req, res) => {
         trx.status = 'Successful';
         await trx.save();
         await user.save();
+        const totalIncome = dashboardDB.getData("/income");
         dashboardDB.push('/income', Number(totalIncome) + Number(trx.amount));
         res.redirect(jsonDB.getData("/payKeys/returnUrl"));
       } catch (error) {

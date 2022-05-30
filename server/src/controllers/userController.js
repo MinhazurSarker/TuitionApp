@@ -23,9 +23,6 @@ const Report = require('../models/Report');
 
 const smsAPIToken = jsonDB.getData("/sms/smsToken");
 const smsGateway = jsonDB.getData("/sms/smsGateway");
-const totalLogin = dashboardDB.getData("/login");
-const totalReg = dashboardDB.getData("/reg");
-const totalUp = dashboardDB.getData("/upgrade");
 
 //-------------------------------
 dotenv.config();
@@ -82,6 +79,8 @@ const sendOTP = async (req, res) => {
 const LoginOrCreateUser = async (req, res) => {
     let reqPhone = req.body.phone;
     let reqOTP = req.body.otp;
+    const totalLogin = dashboardDB.getData("/login");
+    const totalReg = dashboardDB.getData("/reg");
     if (reqPhone && reqOTP) {
         try {
             const otpHolder = await OTPModel.find({ phone: reqPhone });
@@ -102,7 +101,7 @@ const LoginOrCreateUser = async (req, res) => {
                     await OTPModel.deleteMany({ phone: rightOtpFind.phone });
                     res.status(200).json({ authType: "login", token: token, user: user })
                 } else if (rightOtpFind.phone === req.body.phone && validOTP) {
-                    const newUser = new User({ phone: reqPhone,refs:0,role:'user' })
+                    const newUser = new User({ phone: reqPhone, refs: 0, role: 'user' })
                     await newUser.save();
                     const payload = {
                         userId: newUser._id
@@ -340,7 +339,7 @@ const getUser = async (req, res) => {
         const startIndex = (page - 1) * 20;
         const endIndex = page * 20;
         const reqUserRole = req.body.role
-       
+
         const posts = await Post.find({ userID: user._id });
         const pages = ((posts.length / 20) | 0) + 1;
 
@@ -367,7 +366,7 @@ const getUser = async (req, res) => {
                 _id: user._id,
                 avatarImg: user.avatarImg,
                 coverImg: user.coverImg,
-                phone: (reqUserRole == 'tutor'||reqUserRole == 'super'||reqUserRole == 'admin') ?user.phone : null,
+                phone: (reqUserRole == 'tutor' || reqUserRole == 'super' || reqUserRole == 'admin') ? user.phone : null,
                 role: user.role,
                 email: user.email,
                 name: user.name,
@@ -404,10 +403,10 @@ const getUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     try {
         await User.deleteOne({ _id: req.params.userId });
-        await Post.deleteMany({userID:req.params.userId})
-        res.status(200).send({msg:'success'});
+        await Post.deleteMany({ userID: req.params.userId })
+        res.status(200).send({ msg: 'success' });
     } catch (error) {
-        res.status(400).send({err:'error'}); 
+        res.status(400).send({ err: 'error' });
     }
 }
 //------------------------------
@@ -443,31 +442,32 @@ const userFollow = async (req, res) => {
             if (!user.followers.includes(req.body.userId)) {
                 await user.updateOne({ $push: { followers: currentUser._id.toString() } });
                 await currentUser.updateOne({ $push: { followings: user._id.toString() } });
-                res.status(200).json({ type:'Followed', msg: "user has been followed" });
+                res.status(200).json({ type: 'Followed', msg: "user has been followed" });
             } else {
                 await user.updateOne({ $pull: { followers: currentUser._id.toString() } });
                 await currentUser.updateOne({ $pull: { followings: user._id.toString() } });
-                res.status(200).json({type:'Unfollowed', msg: "user has been Unfollowed" });
+                res.status(200).json({ type: 'Unfollowed', msg: "user has been Unfollowed" });
             }
         } else {
             res.status(403).json({ msg: "you cant follow yourself" });
         }
     } catch (err) {
-    
+
         res.status(500).json(err);
     }
 }
 const followingUsers = async (req, res) => {
     const searchString = req.query.search.toString()
     try {
-        const users = await User.find({ followers: { $in: req.body.userId.toString() },
-        role:'tutor',
-        $or: [
-            { name: { $regex: searchString, $options: 'i' } },
-            { institute: { $regex: searchString, $options: 'i' } },
-            { department: { $regex: searchString, $options: 'i' } }
-        ],
-     });
+        const users = await User.find({
+            followers: { $in: req.body.userId.toString() },
+            role: 'tutor',
+            $or: [
+                { name: { $regex: searchString, $options: 'i' } },
+                { institute: { $regex: searchString, $options: 'i' } },
+                { department: { $regex: searchString, $options: 'i' } }
+            ],
+        });
         const page = parseInt(req.query.page) || 1;
         const pages = (users.length / 20 | 0) + 1;
         const startIndex = (page - 1) * 20;
@@ -483,6 +483,8 @@ const followingUsers = async (req, res) => {
     }
 }
 const upgradeByRefs = async (req, res) => {
+    const totalUp = dashboardDB.getData("/upgrade");
+
     try {
         const expDate = moment(Date.now()).add(30, 'days').format('YYYY-MM-DD');
         const user = await User.findOne({ _id: req.body.userId });
