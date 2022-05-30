@@ -253,7 +253,7 @@ function Edit({ userData, token }) {
             <div className=" h-full w-full lg:mb-8 md:mb-6 sm:mb-4 mb-2">
                 <div className=" w-full px-4  md:px-8 mx-auto">
                     <div className=" w-full flex items-center justify-center px-8 py-4 mx-auto  bg-white dark:bg-slate-800 shadow-lg rounded-t-lg">
-                        <div className="w-6/12">
+                        <div className="w-full md:w-6/12">
                             <input type="file" ref={coverRef} onChange={e => upload(e, 'cover')} className='hidden' />
                             <input type="file" ref={avatarRef} onChange={e => upload(e, 'avatar')} className='hidden' />
                             <div className='flex justify-center w-full h-60 relative mt-2 border-4 bg-slate-900 rounded-lg border-indigo-500 '>

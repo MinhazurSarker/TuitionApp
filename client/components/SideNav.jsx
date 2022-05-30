@@ -2,7 +2,6 @@ import Cookies from 'js-cookie';
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from "next/router";
-import { destroyCookie, setCookie } from 'nookies';
 
 import { useContext, useEffect, useState } from 'react';
 import { BiPlus, BiEnvelope, BiFile, BiGridAlt, BiHeart, BiChevronLeft, BiChevronRight, BiSun, BiMoon, BiCog, BiLogOut, BiGroup, BiLogIn } from "react-icons/bi";
@@ -140,10 +139,10 @@ function SideNav({ darkModeHandler, darkmode, mobileMenuShow, updateMobileMenuSt
                                 {darkmode == true ?
                                     <>
                                         <BiSun className={`w-5 h-5 `} />
-                                        <span className="mx-4 w-full font-medium">Light mode</span>
+                                        <span className="mx-4 font-medium">Light mode</span>
                                     </> : <>
                                         <BiMoon className={`w-5 h-5 `} />
-                                        <span className="mx-4 w-full font-medium">Dark mode</span>
+                                        <span className="mx-4 font-medium">Dark mode</span>
                                     </>
                                 }
                             </button>
