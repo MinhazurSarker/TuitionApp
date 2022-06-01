@@ -516,9 +516,11 @@ const userRate = async (req, res) => {
         res.status(200).json({ msg: 'User rated successfully' })
     }
 }
+
+//-----Profile data
 const getMyProfileData = async (req, res) => {
     try {
-        const user = await User.findOne({ _id: req.body.userId })
+        const user = await User.findOne({ _id: req.body.userId });
         const posts = await Post.find({ userID: user._id });
         const ratings = await Rating.find({ to: user._id }).select('stars')
         const resData = {
