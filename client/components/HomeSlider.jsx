@@ -42,7 +42,7 @@ function HomeSlider({ sliderData }) {
                 <BiChevronLeft className='w-10 h-10' />
             </button>
             {slides.map((slide, index) => (
-                <Link href={slide.url} passHref>
+                <Link key={index} href={slide.url} passHref>
                     <div key={index} className={`transition-opacity duration-300 w-full h-full flex justify-center ${active === index ? ' opacity-100' : 'opacity-0'} absolute`}>
                         <img src={`${ServerRoot}${slide.img}`} loading="lazy" alt="Photo by Fakurian Design" className="w-full h-full object-cover object-center absolute inset-0" />
                         {(slide.heading.toString() !== '' || slide.text.toString() !== '') ?
