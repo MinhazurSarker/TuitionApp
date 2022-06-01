@@ -30,8 +30,6 @@ const districtDB = new JsonDB(new Config("districts", true, false, '/'));
 const upozillaDB = new JsonDB(new Config("upazillas", true, false, '/'));
 const unionDB = new JsonDB(new Config("unions", true, false, '/'));
 
-
-
 dotenv.config();
 
 
@@ -587,7 +585,7 @@ const deleteUser = async (req, res) => {
 // View controllers----------
 const indexView = async (req, res) => {
     const trxs = await TRX.find().select('_id phone plan createdAt amount status');
-    const dashboardDB = new JsonDB(new Config("dashboardData", true, false, '/'));
+    var dashboardDB = new JsonDB(new Config("dashboardData", true, false, '/'));
     const totalLogin = dashboardDB.getData("/login");
     const totalReg = dashboardDB.getData("/reg");
     const totalUp = dashboardDB.getData("/upgrade");
