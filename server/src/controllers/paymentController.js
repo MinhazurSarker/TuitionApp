@@ -101,6 +101,8 @@ const payment = async (req, res) => {
 
 var dashboardDB = new JsonDB(new Config("dashboardData", true, false, '/'));
 const callBack = async (req, res) => {
+  const totalIncome = dashboardDB.getData("/income");
+  const totalUp = dashboardDB.getData("/upgrade");
   const { pay_status, mer_txnid } = req.body;
   try {
     const trx = await TRX.findOne({ _id: mer_txnid });
@@ -113,8 +115,8 @@ const callBack = async (req, res) => {
         trx.status = 'Successful';
         await trx.save();
         await user.save();
-        const totalIncome = dashboardDB.getData("/income");
         dashboardDB.push('/income', Number(totalIncome) + Number(trx.amount));
+        dashboardDB.push('/upgrade', Number(totalUp) + 1);
         res.redirect(jsonDB.getData("/payKeys/returnUrl"));
       } catch (error) {
         trx.status = 'Failed';
