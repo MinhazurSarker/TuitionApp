@@ -27,19 +27,19 @@ function LocationSelector({ change, divission, district, upozilla, union, start 
         await (await fetch(`${ApiServer}/divissions`)).json().then(data => { setDivState([{ name: '' }].concat(data.divissions)) }).then(async () => {
             await (await fetch(`${ApiServer}/districts`)).json().then(data => {
                 setDisState(data.districts);
-                setDist([{name:district}])
+                setDist([{ name: district }])
             })
         }).then(async () => {
             await (await fetch(`${ApiServer}/upozillas`)).json().then(data => {
                 setUpoState(data.upazillas);
-            }).then(()=>{
-                setUpoz([{name:upozilla}]);
+            }).then(() => {
+                setUpoz([{ name: upozilla }]);
             })
         }).then(async () => {
             await (await fetch(`${ApiServer}/unions`)).json().then(data => {
                 setUniState(data.unions)
-            }).then(()=>{
-                setUnio([{name:union }]);
+            }).then(() => {
+                setUnio([{ name: union }]);
             })
         })
             .then(() => { setDiv(divission) })
@@ -110,8 +110,9 @@ function LocationSelector({ change, divission, district, upozilla, union, start 
             <div className=' w-full' >
                 <div className="flex w-full flex-wrap mt-2 mb-2 border border-indigo-500 rounded-lg p-6">
                     <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+                        <label className="block text-gray-800 dark:text-gray-200 mb-1">Divission</label>
                         <div className="relative">
-                            <select onChange={(event) => { divChange(event) }} value={div.toString() || divission} className="block appearance-none w-full bg-slate-100 border border-slate-200 dark:bg-slate-900 dark:border-slate-900 text-gray-700 dark:text-gray-200 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                            <select onChange={(event) => { divChange(event) }} value={div.toString() || divission} className="block appearance-none w-full bg-slate-100 border border-slate-200 dark:bg-slate-900 dark:border-slate-900 text-gray-700 dark:text-gray-200 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                                 {divState.map((item, index) => (<option onClick={(event) => { divChange(event) }} key={index} value={item.name} >{item.name ? item.name : 'Select one'}</option>))}
                             </select>
                             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -120,8 +121,10 @@ function LocationSelector({ change, divission, district, upozilla, union, start 
                         </div>
                     </div>
                     <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+                        <label className="block text-gray-800 dark:text-gray-200 mb-1">District</label>
+
                         <div className="relative">
-                            <select onChange={(event) => { disChange(event) }} value={dis.toString() || district} className="block appearance-none w-full bg-slate-100 border border-slate-200 dark:bg-slate-900 dark:border-slate-900 text-gray-700 dark:text-gray-200 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                            <select onChange={(event) => { disChange(event) }} value={dis.toString() || district} className="block appearance-none w-full bg-slate-100 border border-slate-200 dark:bg-slate-900 dark:border-slate-900 text-gray-700 dark:text-gray-200 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                                 {dist.map((item, index) => (<option key={index} value={item.name} >{item.name ? item.name : 'Select one'}</option>))}
                             </select>
                             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -130,8 +133,10 @@ function LocationSelector({ change, divission, district, upozilla, union, start 
                         </div>
                     </div>
                     <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+                        <label className="block text-gray-800 dark:text-gray-200 mb-1">Upazila</label>
+
                         <div className="relative">
-                            <select onChange={(event) => { upoChange(event) }} value={upo.toString() || upozilla} className="block appearance-none w-full bg-slate-100 border border-slate-200 dark:bg-slate-900 dark:border-slate-900 text-gray-700 dark:text-gray-200 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                            <select onChange={(event) => { upoChange(event) }} value={upo.toString() || upozilla} className="block appearance-none w-full bg-slate-100 border border-slate-200 dark:bg-slate-900 dark:border-slate-900 text-gray-700 dark:text-gray-200 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                                 {upoz.map((item, index) => (<option key={index} value={item.name} >{item.name ? item.name : 'Select one'}</option>))}
                             </select>
                             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -140,8 +145,10 @@ function LocationSelector({ change, divission, district, upozilla, union, start 
                         </div>
                     </div>
                     <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+
+                        <label className="block text-gray-800 dark:text-gray-200 mb-1">Union</label>
                         <div className="relative">
-                            <select onChange={(event) => { uniChange(event) }} value={uni.toString() || union} className="block appearance-none w-full bg-slate-100 border border-slate-200 dark:bg-slate-900 dark:border-slate-900 text-gray-700 dark:text-gray-200 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                            <select onChange={(event) => { uniChange(event) }} value={uni.toString() || union} className="block appearance-none w-full bg-slate-100 border border-slate-200 dark:bg-slate-900 dark:border-slate-900 text-gray-700 dark:text-gray-200 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                                 {unio.map((item, index) => (<option key={index} value={item.name} >{item.name ? item.name : 'Select one'}</option>))}
                             </select>
                             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">

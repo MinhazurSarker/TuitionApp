@@ -1,16 +1,20 @@
 import axios from "axios";
 import Router from "next/router";
+import { useState } from "react";
 import Swal from "sweetalert2";
 
 function PricingCard({ plan, token }) {
+    const [loading, setLoading] = useState(false);
     const handleUpgrade = (e) => {
         e.preventDefault()
+        setLoading(true)
         axios.post(`${process.env.NEXT_PUBLIC_API_URL}/pay`, { planId: plan._id }, {
             headers: {
                 token: token
             }
         }).then(res => {
             if (res.data.status == 'failed') {
+                setLoading(false)
                 Swal.fire({
                     icon: 'error',
                     title: 'OOps',
@@ -18,11 +22,12 @@ function PricingCard({ plan, token }) {
                 })
             } else {
                 if (res.data.url) {
+                    setLoading(false)      
                     Router.push(res.data.url)
                 }
             }
         }).catch(res => {
-            console.log(res.data)
+            setLoading(false)
             Swal.fire({
                 icon: 'error',
                 title: 'OOps',
@@ -47,7 +52,7 @@ function PricingCard({ plan, token }) {
                     <span className="text-4xl text-indigo-500 font-bold">{plan.amount}</span>
                     <span className="text-gray-700 dark:text-gray-200">/user/month</span>
                 </div>
-                <button onClick={e => handleUpgrade(e)} className="block bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus-visible:ring ring-indigo-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3">Upgrade</button>
+                <button onClick={e => handleUpgrade(e)} className="block bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus-visible:ring ring-indigo-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3">{loading?'Please Wait':'Upgrade'}</button>
             </div>
         </div>
     );

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
-import axios from 'axios'
 import Link from "next/link";
 
 function HomeSlider({ sliderData }) {

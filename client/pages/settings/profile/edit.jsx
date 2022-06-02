@@ -44,6 +44,7 @@ function Edit({ userData, token }) {
     const [userCoverNew, setUserCoverNew] = useState();
     const [userAvatarNew, setUserAvatarNew] = useState();
 
+    const [sending, setSending] = useState(false);
 
 
     const [divission, setDivission] = useState('');
@@ -181,6 +182,7 @@ function Edit({ userData, token }) {
     }
 
     const handleSave = (e) => {
+        setSending(true)
         axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/edit/${userId}`, formData, {
             headers: {
                 'token': token,
@@ -189,6 +191,7 @@ function Edit({ userData, token }) {
         }).then((res) => {
             setUser(res.data.user)
             localStorage.setItem('user', JSON.stringify(res.data.user))
+            setSending(false)
             Swal.fire({
                 title: 'Saved',
                 text: 'Successfully saved',
@@ -387,7 +390,7 @@ function Edit({ userData, token }) {
                         </div>
 
                         <div className="flex justify-center mt-6">
-                            <button onClick={(event) => handleSave(event)} className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-slate-700 rounded-md hover:bg-slate-600 focus:outline-none focus:bg-slate-600">Save</button>
+                            <button onClick={(event) => handleSave(event)} className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-slate-700 rounded-md hover:bg-slate-600 focus:outline-none focus:bg-slate-600">{sending?'Saving...':'Save'}</button>
                         </div>
 
                     </section>
