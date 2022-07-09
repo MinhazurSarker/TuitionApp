@@ -184,6 +184,7 @@ const updatePosts = async (req, res) => {
     const post = await Post.findOneAndUpdate(
         { _id: req.params.postId },
         {
+            desc: req.body.desc,
             class: req.body.class,
             days: req.body.days,
             lang: req.body.lang,
